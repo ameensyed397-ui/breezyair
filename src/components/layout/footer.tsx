@@ -34,10 +34,12 @@ export function Footer() {
           <div className="flex flex-col gap-6 md:items-end">
             <div className="flex flex-col gap-2 md:text-right">
               <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Quick Links</h4>
-              <p className="text-sm font-semibold text-gray-700">Emergency: +91 80-4567-8901</p>
-              <Link href="/services" className="text-sm text-gray-500 hover:text-[#4fc3f7] transition-colors">Service Areas</Link>
-              <Link href="#"         className="text-sm text-gray-500 hover:text-[#4fc3f7] transition-colors">Terms of Service</Link>
-              <Link href="#"         className="text-sm text-gray-500 hover:text-[#4fc3f7] transition-colors">Mascot Guide</Link>
+              <p className="text-sm font-semibold text-gray-700">Emergency: +91 8660174569</p>
+              <Link href="/services" className="text-sm text-gray-500 hover:text-[#4fc3f7] transition-colors">Services</Link>
+              <Link href="/pricing"  className="text-sm text-gray-500 hover:text-[#4fc3f7] transition-colors">Pricing</Link>
+              <Link href="/b2b"       className="text-sm text-gray-500 hover:text-[#4fc3f7] transition-colors">For Business</Link>
+              <Link href="/about"     className="text-sm text-gray-500 hover:text-[#4fc3f7] transition-colors">About Asad</Link>
+              <Link href="/book"      className="text-sm text-gray-500 hover:text-[#4fc3f7] transition-colors">Book a Service</Link>
             </div>
 
             {/* Vertical logo */}

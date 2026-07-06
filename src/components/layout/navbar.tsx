@@ -27,6 +27,9 @@ export function Navbar() {
   const links = [
     { href: "/", label: "Home" },
     { href: "/services", label: "Services" },
+    { href: "/pricing", label: "Pricing" },
+    { href: "/b2b", label: "For Business" },
+    { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ];
 
@@ -52,7 +55,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav — each link is a bordered pill matching reference */}
-        <nav className="hidden md:flex items-center gap-2">
+        <nav className="hidden md:flex items-center gap-1.5">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
@@ -60,7 +63,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "px-4 py-2 text-sm font-semibold border-2 border-black btn-lift transition-colors",
+                  "px-3 py-2 text-sm font-semibold border-2 border-black btn-lift transition-colors whitespace-nowrap",
                   active
                     ? "bg-[#4fc3f7] text-black"
                     : "bg-white text-[#111111] hover:bg-gray-50"
@@ -74,7 +77,7 @@ export function Navbar() {
 
         {/* BOOK NOW + hamburger */}
         <div className="flex items-center gap-2">
-          <Link href="/contact" className="hidden md:inline-flex">
+          <Link href="/book" className="hidden md:inline-flex">
             <button className="btn-lift bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider px-5 py-2.5 border-2 border-black">
               BOOK NOW
             </button>
@@ -116,7 +119,7 @@ export function Navbar() {
             );
           })}
           <div className="p-4">
-            <Link href="/contact">
+            <Link href="/book">
               <button className="btn-lift w-full bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider py-3 border-2 border-black">
                 BOOK NOW
               </button>
