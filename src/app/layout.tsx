@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { BreezyWidget } from "@/components/agent/breezy-widget";
 import Script from "next/script";
 
 /* ── Global SEO metadata ─────────────────────────────────── */
@@ -219,6 +220,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <Footer />
+        <BreezyWidget />
       </body>
     </html>
   );

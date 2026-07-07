@@ -29,6 +29,7 @@ export function Navbar() {
     { href: "/services", label: "Services" },
     { href: "/pricing", label: "Pricing" },
     { href: "/b2b", label: "For Business" },
+    { href: "/blog", label: "Blog" },
     { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
   ];
@@ -55,7 +56,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav — each link is a bordered pill matching reference */}
-        <nav className="hidden md:flex items-center gap-1.5">
+        <nav className="hidden lg:flex items-center gap-1.5">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
@@ -77,7 +78,7 @@ export function Navbar() {
 
         {/* BOOK NOW + hamburger */}
         <div className="flex items-center gap-2">
-          <Link href="/book" className="hidden md:inline-flex">
+          <Link href="/book" className="hidden lg:inline-flex">
             <button className="btn-lift bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider px-5 py-2.5 border-2 border-black">
               BOOK NOW
             </button>
@@ -86,7 +87,7 @@ export function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 border-2 border-black bg-white text-[#111111]"
+            className="lg:hidden p-2 border-2 border-black bg-white text-[#111111]"
             aria-label="Toggle menu"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square">
@@ -102,7 +103,7 @@ export function Navbar() {
 
       {/* Mobile dropdown */}
       {mobileOpen && (
-        <div className="md:hidden bg-white border-t-2 border-black">
+        <div className="lg:hidden bg-white border-t-2 border-black">
           {links.map((link) => {
             const active = pathname === link.href;
             return (
