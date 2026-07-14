@@ -66,6 +66,10 @@ body {
   background-color: #ffffff;
   color: #111111;
   -webkit-font-smoothing: antialiased;
+  /* Guard against horizontal scroll from rotated badges / decorative offsets on
+     small screens. `clip` (not `hidden`) keeps position:sticky working. */
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 /* Caveat — display use only */
@@ -118,3 +122,70 @@ body {
 }
 .nav-link:hover::after,
 .nav-link.active::after { width: 100%; }
+
+/* ── Micro-animations ──────────────────── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes pop-in {
+  0%   { opacity: 0; transform: scale(0.95); }
+  70%  { transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out both;
+}
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out both;
+}
+.animate-pop-in {
+  animation: pop-in 0.4s ease-out both;
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.5s ease-out both;
+}
+.animate-wiggle {
+  animation: wiggle 0.6s ease-in-out both;
+}
+
+/* Staggered delays for lists */
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.1s; }
+.delay-3 { animation-delay: 0.15s; }
+.delay-4 { animation-delay: 0.2s; }
+.delay-5 { animation-delay: 0.25s; }
+.delay-6 { animation-delay: 0.3s; }
+
+/* ── Scrollbar hide for horizontal scroll containers ─── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Reduced motion: disable all entrance animations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-fade-in,
+  .animate-pop-in,
+  .animate-slide-in-right,
+  .animate-wiggle {
+    animation: none !important;
+  }
+}

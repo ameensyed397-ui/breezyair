@@ -1,16 +1,17 @@
-import { CheckCircle2, Droplet, Wrench, Zap, Settings2, ThermometerSun, Shield, Clock, ArrowRight } from "lucide-react";
+import { CheckCircle2, Droplet, Wrench, Zap, Settings2, ThermometerSun, Shield, Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "AC Repair, Cleaning & Installation Services in Bengaluru",
   description:
-    "Breezyair offers expert AC repair (₹499), deep cleaning (₹999), maintenance plans & new installations across Indiranagar, Koramangala & Whitefield. Same-day certified service.",
+    "Breezyair offers expert AC repair (₹499), deep cleaning (₹899), maintenance plans & new installations across Indiranagar, Koramangala & Whitefield. Same-day certified service.",
   alternates: { canonical: "https://breezyair.co/services" },
   openGraph: {
     title: "AC Repair, Cleaning & Installation Services | Breezyair Bengaluru",
-    description: "Expert AC repair from ₹499. Deep cleaning, maintenance plans, energy audits & installations by certified HVAC technicians across Bengaluru.",
+    description: "Expert AC repair from ₹499. Deep cleaning, maintenance plans & installations by certified HVAC technicians across Bengaluru.",
     url: "https://breezyair.co/services",
   },
 };
@@ -22,7 +23,7 @@ const TEAM = [
   { initials: "MK", name: "Mohan K.",      role: "HVAC Specialist",   color: "#a7ffeb", text: "#111111" },
   { initials: "SP", name: "Suresh P.",     role: "Repair Expert",     color: "#4fc3f7", text: "#111111" },
   { initials: "DR", name: "Dinesh R.",     role: "Installations",     color: "#ffb74d", text: "#111111" },
-  { initials: "KM", name: "Kiran M.",      role: "Energy Auditor",    color: "#a7ffeb", text: "#111111" },
+  { initials: "KM", name: "Kiran M.",      role: "AC Specialist",     color: "#a7ffeb", text: "#111111" },
   { initials: "PJ", name: "Pradeep J.",    role: "AC Cleaning",       color: "#4fc3f7", text: "#111111" },
   { initials: "HV", name: "Harish V.",     role: "Field Tech",        color: "#ffb74d", text: "#111111" },
 ];
@@ -37,6 +38,7 @@ export default function Services() {
 
           {/* Text left */}
           <div className="flex-1 flex flex-col gap-5 w-full">
+            <Breadcrumbs items={[{ label: "Services" }]} />
             <p className="text-[10px] font-bold uppercase tracking-widest text-[#4fc3f7]">Certified HVAC Experts</p>
 
             {/* H1 — Inter 900 + Caveat highlighter combo */}
@@ -59,12 +61,12 @@ export default function Services() {
             </p>
 
             <div className="flex flex-wrap gap-3 mt-2">
-              <Link href="/contact">
+              <Link href="/book">
                 <button className="btn-lift bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 border-black">
                   Book a Service
                 </button>
               </Link>
-              <Link href="#pricing">
+              <Link href="/pricing">
                 <button className="btn-lift bg-white text-black font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 border-black">
                   View Pricing
                 </button>
@@ -73,7 +75,7 @@ export default function Services() {
 
             {/* Quick stats */}
             <div className="flex flex-wrap gap-5 mt-2">
-              {[["15+", "Years Experience"], ["500+", "ACs Fixed"], ["4.9★", "Customer Rating"]].map(([num, label]) => (
+              {[["15+", "Years in HVAC"], ["Same-day", "Service"], ["30-min", "Callback"]].map(([num, label]) => (
                 <div key={label} className="flex flex-col">
                   <span className="font-display text-2xl font-bold text-[#111111]">{num}</span>
                   <span className="text-xs text-gray-400 font-medium">{label}</span>
@@ -135,7 +137,7 @@ export default function Services() {
               <ul className="flex flex-col gap-2.5 mt-1">
                 {[
                   "15+ Years of HVAC Industry Experience",
-                  "NATE Certified Professional",
+                  "Industry-Certified Professional",
                   "Background-Verified & Insured",
                   "Local Community Service Award Winner",
                 ].map((item) => (
@@ -162,35 +164,47 @@ export default function Services() {
               {
                 icon: Settings2, title: "AC Repair", available: true,
                 desc: "Strange noises? Warm air? We diagnose and fix all AC issues fast — same day guaranteed.",
-                perks: ["Leak Detection", "Component Repair", "Refrigerant Top-up"],
-                action: "Schedule Repair",
+                included: ["Fault diagnosis & written quote", "Common parts (fan motor, capacitor, etc.)", "Performance test after fix"],
               },
               {
-                icon: Wrench, title: "Maintenance Plans",
+                icon: Wrench, title: "Maintenance Plans", available: false,
                 desc: "Prevent costly breakdowns before they happen. Regular servicing doubles your AC lifespan.",
-                perks: ["Seasonal Tune-ups", "Filter Replacement", "Performance Check"],
-                action: "Join Protection Plan",
+                included: ["Seasonal tune-ups", "Filter replacement", "Full performance check"],
               },
               {
-                icon: ThermometerSun, title: "New Installations",
+                icon: ThermometerSun, title: "New Installations", available: false,
                 desc: "Upgrading to a 5-star energy efficient system? We design, supply and install with precision.",
-                perks: ["Brand Agnostic", "Ductwork Design", "Smart Thermostat Setup"],
-                action: "Get Free Quote",
+                included: ["Mounting & wall bracket", "Piping (3m included)", "Wiring & gas charge", "Trial run & handover"],
               },
               {
-                icon: Droplet, title: "Deep AC Cleaning",
-                desc: "Remove mold, bacteria and grime. Breathe cleaner air and improve cooling efficiency by 30%.",
-                perks: [], action: "Starts at ₹999",
+                icon: Droplet, title: "Deep AC Cleaning", available: true,
+                desc: "Foam wash, high-pressure jet, full inside-out clean. Removes mold, bacteria and grime.",
+                included: ["High-pressure water jet", "Anti-bacterial foam treatment", "Drain line flush", "Coil & fin deep clean"],
               },
               {
-                icon: Wrench, title: "Emergency Repair",
-                desc: "AC dead on a hot night? Our emergency team responds within 1 hour across Bengaluru.",
-                perks: [], action: "Starts at ₹499",
+                icon: Wrench, title: "Emergency Repair", available: true,
+                desc: "AC dead on a hot night? Same-day response within 1 hour across Bengaluru.",
+                included: ["Same-day response (within 1hr)", "Fault diagnosis on-site", "Common fixes same visit"],
               },
               {
-                icon: Zap, title: "Energy Audit",
-                desc: "Slash your electricity bill. We audit HVAC efficiency and recommend proven fixes.",
-                perks: [], action: "Flat ₹799",
+                icon: Zap, title: "Gas Top-up & Refill", available: false,
+                desc: "R-32 or R-22 refrigerant. Partial top-up or full refill depending on your AC's needs.",
+                included: ["Gas pressure check", "Leak detection", "Partial or full refill"],
+              },
+              {
+                icon: Settings2, title: "PCB & Board Repair", available: false,
+                desc: "Diagnosis and repair of control boards and PCBs. Free diagnosis, quote before repair.",
+                included: ["Free PCB diagnosis", "Detailed repair quote", "Fitting & testing"],
+              },
+              {
+                icon: Wrench, title: "Fan Motor & Parts", available: false,
+                desc: "Indoor or outdoor fan motor replacement. Parts at cost, fitting included.",
+                included: ["Motor diagnosis", "Parts at cost price", "Fitting included (₹300)"],
+              },
+              {
+                icon: Droplet, title: "Drain Pipe Unblocking", available: false,
+                desc: "Standard drain line blockage clearance. Quick fix, no mess.",
+                included: ["Blockage diagnosis", "Drain line flush", "Flow test"],
               },
             ].map((s, i) => (
               <article key={i} className="card-lift bg-white flex flex-col group relative">
@@ -207,27 +221,22 @@ export default function Services() {
                 </div>
                 <div className="p-5 flex flex-col gap-3 flex-1">
                   <p className="text-sm text-gray-500 leading-relaxed">{s.desc}</p>
-                  {s.perks.length > 0 && (
-                    <ul className="space-y-1.5 mt-1">
-                      {s.perks.map((p) => (
-                        <li key={p} className="flex items-center gap-2 text-xs font-semibold text-[#111111]">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#4fc3f7]" aria-hidden="true" /> {p}
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#4fc3f7] mb-2">What&apos;s included</p>
+                    <ul className="space-y-1.5">
+                      {s.included.map((item) => (
+                        <li key={item} className="flex items-center gap-2 text-xs font-semibold text-[#111111]">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#4fc3f7] shrink-0" aria-hidden="true" /> {item}
                         </li>
                       ))}
                     </ul>
-                  )}
+                  </div>
                   <div className="mt-auto pt-3">
-                    {s.perks.length > 0 ? (
-                      <Link href="/contact">
-                        <button className="btn-lift w-full bg-[#4fc3f7] text-black font-bold text-xs uppercase tracking-wider py-2.5 border-2 border-black">
-                          {s.action}
-                        </button>
-                      </Link>
-                    ) : (
-                      <Link href="/contact" className="text-[#4fc3f7] text-sm font-bold flex items-center gap-1 hover:underline">
-                        {s.action} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                      </Link>
-                    )}
+                    <Link href="/book">
+                      <button className="btn-lift w-full bg-[#4fc3f7] text-black font-bold text-xs uppercase tracking-wider py-3 border-2 border-black">
+                        Book Now
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -261,7 +270,7 @@ export default function Services() {
               <div className="flex flex-col gap-5">
                 {[
                   { icon: Settings2, title: "Transparent Pricing",  desc: "We quote before we touch anything. No surprises, no upsells — just honest pricing." },
-                  { icon: Shield,    title: "Licensed Experts",     desc: "Every Breezyair technician is NATE-certified and fully insured for your peace of mind." },
+                  { icon: Shield,    title: "Licensed Experts",     desc: "Every Breezyair technician is industry-certified and fully insured for your peace of mind." },
                   { icon: Clock,     title: "Same-Day Turnaround",  desc: "We know Bengaluru heat doesn&apos;t wait. Most AC repairs are completed within 24 hours." },
                 ].map((f, i) => (
                   <div key={i} className="flex gap-4">
@@ -314,14 +323,14 @@ export default function Services() {
       </section>
 
       {/* ── CTA ─────────────────────────────────────────────── */}
-      <section id="pricing" aria-label="Book a service" className="border-t-2 border-black bg-[#0d47a1]">
+      <section aria-label="Book a service" className="border-t-2 border-black bg-[#0d47a1]">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-16 md:py-20 text-center flex flex-col items-center gap-6">
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">Ready to Stay Cool?</h2>
           <p className="text-sm text-white/70 max-w-sm leading-relaxed">
             Book a service today — fast, friendly, and priced fairly. Same-day availability across Bengaluru.
           </p>
-          <Link href="/contact">
-            <button className="btn-lift bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider px-10 py-4 border-2 border-black">
+          <Link href="/book">
+            <button className="btn-lift bg-white text-black font-bold text-sm uppercase tracking-wider px-10 py-4 border-2 border-black">
               Book a Service
             </button>
           </Link>

@@ -40,4 +40,5 @@ always builds and runs. Nothing in the agents changes when you connect a node.
 
 ## Model
 `model.ts` — one env-configurable string via the Vercel AI Gateway
-(`BREEZY_MODEL`, default `anthropic/claude-sonnet-4-6`).
+(`BREEZY_MODEL`, default `anthropic/claude-sonnet-4.5`). Verify the exact slug
+for your account with `curl -s https://ai-gateway.vercel.sh/v1/models`.

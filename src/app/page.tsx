@@ -1,8 +1,9 @@
-import { Input } from "@/components/ui/input";
-import { CheckCircle2, Zap, Wind, Wrench, Droplet, ShieldCheck, Star, Check, ArrowRight } from "lucide-react";
+import { CheckCircle2, Zap, Wind, Wrench, Droplet, ShieldCheck, Star, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { PriceEstimator } from "@/components/ui/price-estimator";
+import { AnimateIn } from "@/components/ui/animate-in";
 
 export const metadata: Metadata = {
   title: "AC Repair & HVAC Service in Bengaluru | Breezyair",
@@ -27,10 +28,12 @@ export default function Home() {
           {/* Text */}
           <div className="flex-1 flex flex-col gap-5 w-full">
             {/* Badge — Inter bold */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 border-2 border-black bg-[#ffb74d] text-black text-xs font-bold uppercase tracking-wide w-fit rotate-[-2deg] brutal-shadow-sm">
-              <Star className="w-3.5 h-3.5" aria-hidden="true" />
-              Bengaluru&apos;s top rated HVAC
-            </div>
+            <AnimateIn animation="slide-in-right">
+              <div className="inline-flex items-center gap-2 px-3 py-1 border-2 border-black bg-[#ffb74d] text-black text-xs font-bold uppercase tracking-wide w-fit rotate-[-2deg] brutal-shadow-sm">
+                <Star className="w-3.5 h-3.5" aria-hidden="true" />
+                Bengaluru&apos;s top rated HVAC
+              </div>
+            </AnimateIn>
 
             {/* H1 — Inter 900 + Caveat combo with highlighter */}
             <h1 className="flex flex-col gap-1">
@@ -59,38 +62,42 @@ export default function Home() {
             </p>
 
             {/* Quick booking widget */}
-            <div className="border-2 border-black bg-white p-4 flex flex-col sm:flex-row gap-3 w-full max-w-xl brutal-shadow mt-2">
+            <form action="/book" method="GET" className="border-2 border-black bg-white p-4 flex flex-col sm:flex-row gap-3 w-full max-w-xl brutal-shadow mt-2">
               <div className="flex-1 flex flex-col gap-1.5">
                 <label htmlFor="service-select" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Service Needed</label>
-                <select id="service-select" className="h-11 w-full border-2 border-black bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4fc3f7]">
-                  <option>Deep AC Cleaning</option>
-                  <option>Quick Repair</option>
-                  <option>Annual Maintenance</option>
-                  <option>New Installation</option>
+                <select name="service" id="service-select" className="h-11 w-full border-2 border-black bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4fc3f7]">
+                  <option value="basic-service">AC Basic Service — ₹499</option>
+                  <option value="full-service">AC Full Service — ₹699</option>
+                  <option value="wet-clean">Wet Deep Clean — ₹899</option>
+                  <option value="installation">AC Installation — ₹1,499</option>
+                  <option value="uninstallation">AC Uninstallation — ₹699</option>
+                  <option value="inspection">Inspection Visit — ₹350</option>
+                  <option value="amc-chill-basic">AMC Chill Basic — ₹1,499/yr</option>
+                  <option value="amc-bengaluru-cool">AMC Bengaluru Cool — ₹2,999/yr</option>
+                  <option value="amc-villa-plan">AMC Villa Plan — ₹1,999/AC/yr</option>
                 </select>
               </div>
               <div className="flex-1 flex flex-col gap-1.5">
                 <label htmlFor="locality-select" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Your Area</label>
-                <select id="locality-select" className="h-11 w-full border-2 border-black bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4fc3f7]">
-                  <option>Indiranagar</option>
-                  <option>Koramangala</option>
-                  <option>Whitefield</option>
-                  <option>HSR Layout</option>
-                  <option>Marathahalli</option>
+                <select name="locality" id="locality-select" className="h-11 w-full border-2 border-black bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4fc3f7]">
+                  <option value="indiranagar">Indiranagar</option>
+                  <option value="koramangala">Koramangala</option>
+                  <option value="whitefield">Whitefield</option>
+                  <option value="hsr-layout">HSR Layout</option>
+                  <option value="bellandur">Bellandur</option>
+                  <option value="marathahalli">Marathahalli</option>
                 </select>
               </div>
               <div className="flex items-end w-full sm:w-auto">
-                <Link href="/contact" className="w-full sm:w-auto">
-                  <button className="btn-lift h-11 w-full sm:w-auto px-5 bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wide border-2 border-black whitespace-nowrap">
-                    Book Now
-                  </button>
-                </Link>
+                <button type="submit" className="btn-lift h-11 w-full sm:w-auto px-5 bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wide border-2 border-black whitespace-nowrap">
+                  Book Now
+                </button>
               </div>
-            </div>
+            </form>
 
             {/* Trust indicators */}
             <div className="flex flex-wrap gap-4 mt-1">
-              {["500+ Happy Homes", "Same-Day Service", "No Hidden Costs", "Certified Techs"].map((t) => (
+              {["500+ Happy Homes", "Same Asad Every Time", "Visiting Charge Waived", "No Hidden Costs"].map((t) => (
                 <div key={t} className="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#4fc3f7] shrink-0" aria-hidden="true" />
                   {t}
@@ -120,17 +127,20 @@ export default function Home() {
       {/* ── SERVICE CARDS ───────────────────────────────────── */}
       <section aria-label="Our AC Services" className="border-t-2 border-black bg-white">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-14 md:py-20">
-          <div className="text-center mb-10">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#111111] mb-2">Our Chill Services</h2>
-            <p className="text-sm text-[#4fc3f7] font-semibold italic">Cooling Bengaluru since 2012</p>
-          </div>
+          <AnimateIn>
+            <div className="text-center mb-10">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#111111] mb-2">Our Chill Services</h2>
+              <p className="text-sm text-[#4fc3f7] font-semibold italic">Cooling Bengaluru since 2012</p>
+            </div>
+          </AnimateIn>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
-              { icon: Droplet, title: "Deep AC Cleaning", desc: "Breathe easy. We remove mold, dust and grime — your AC comes out feeling brand new.", price: "Starts at ₹999", href: "/services" },
-              { icon: Wrench,  title: "AC Repair",        desc: "Weird noise? Warm air? We diagnose and fix all AC issues fast, the same day.",         price: "Starts at ₹499", href: "/services" },
-              { icon: Zap,     title: "Energy Audit",     desc: "Cut your BESCOM bill. We identify inefficiencies and fix energy leaks in your HVAC.",  price: "Flat ₹799",     href: "/services" },
+              { icon: Droplet, title: "Wet Deep Clean", desc: "Breathe easy. We remove mold, dust and grime — your AC comes out feeling brand new.", price: "Starts at ₹899", href: "/services" },
+              { icon: Wrench,  title: "AC Repair",      desc: "Weird noise? Warm air? We diagnose and fix all AC issues fast, the same day.",        price: "Starts at ₹499", href: "/services" },
+              { icon: Zap,     title: "AC Installation", desc: "Upgrading? We install new split or window ACs with precision and a full handover.",    price: "Flat ₹1,499",   href: "/services" },
             ].map((s, i) => (
-              <article key={i} className="card-lift bg-white flex flex-col">
+              <AnimateIn key={i} delay={i * 0.1}>
+                <article className="card-lift bg-white flex flex-col h-full">
                 <div className="p-5 pb-0">
                   <div className="w-10 h-10 bg-[#e8f4fd] border-2 border-black flex items-center justify-center mb-3" aria-hidden="true">
                     <s.icon className="w-5 h-5 text-[#4fc3f7]" />
@@ -144,6 +154,7 @@ export default function Home() {
                   </Link>
                 </div>
               </article>
+              </AnimateIn>
             ))}
           </div>
         </div>
@@ -158,13 +169,13 @@ export default function Home() {
             <div className="md:col-span-2 bg-white border-2 border-black brutal-shadow p-7 md:p-8">
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#111111] mb-3">Built on Neighborly Trust.</h2>
               <p className="text-sm text-gray-500 mb-7 leading-relaxed">
-                Transparent pricing, certified experts, zero mess. We treat your home like our own — always.
+                Transparent pricing, certified experts, zero mess. We quote before we start — you approve every rupee. Same technician, Asad, every time.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 {[
-                  { icon: ShieldCheck,  title: "100% Guaranteed", desc: "No fix, no fee promise" },
-                  { icon: CheckCircle2, title: "Certified Techs",  desc: "Background verified pros" },
-                  { icon: Wind,         title: "Upfront Pricing",  desc: "No hidden costs, ever" },
+                  { icon: ShieldCheck,  title: "Quote Before Work",  desc: "You approve every rupee" },
+                  { icon: CheckCircle2, title: "Same Tech Every Time",  desc: "Asad shows up, not a stranger" },
+                  { icon: Wind,         title: "Visiting Charge Waived",  desc: "If you say yes to the work" },
                 ].map((t, i) => (
                   <div key={i} className="flex gap-3 items-start">
                     <div className="w-9 h-9 bg-[#4fc3f7] border-2 border-black flex items-center justify-center shrink-0" aria-hidden="true">
@@ -214,27 +225,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ────────────────────────────────────── */}
+      {/* ── HOW IT WORKS — TRANSPARENT BILLING ──────────────── */}
       <section aria-label="How Breezyair works" className="border-t-2 border-black bg-white">
         <div className="max-w-5xl mx-auto px-4 md:px-8 py-14 md:py-20">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#111111] mb-2">Simple as Filter Coffee</h2>
-            <p className="text-sm text-gray-400 italic">Four easy steps to a cooler home</p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <AnimateIn>
+            <div className="text-center mb-12">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#111111] mb-2">Transparent Billing — 5 Steps</h2>
+              <p className="text-sm text-gray-500 italic">You always know what you&apos;re paying. No surprises.</p>
+            </div>
+          </AnimateIn>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6">
             {[
-              { step: "1", title: "Book Online",    desc: "Pick your time" },
-              { step: "2", title: "Pro Arrives",    desc: "Toolbox in hand" },
-              { step: "3", title: "Get It Sorted",  desc: "Chill restored" },
-              { step: "4", title: "Pay Online",     desc: "Easy & secure" },
+              { step: "1", title: "Fixed Base Price",    desc: "What you booked. Locked." },
+              { step: "2", title: "Free Diagnosis",      desc: "10-min check, full quote" },
+              { step: "3", title: "You Approve",         desc: "No extras without your OK" },
+              { step: "4", title: "Published Add-ons",   desc: "Fixed prices, no surprises" },
+              { step: "5", title: "WhatsApp Invoice",    desc: "Itemised, saved to your phone" },
             ].map((s, i) => (
-              <div key={i} className="flex flex-col items-center gap-3">
-                <div className="w-12 h-12 bg-[#4fc3f7] border-2 border-black rounded-full flex items-center justify-center font-display font-bold text-xl text-black brutal-shadow-sm" aria-hidden="true">
+              <div key={i} className="flex flex-col items-center gap-3 h-full">
+                <div className="w-12 h-12 shrink-0 bg-[#4fc3f7] border-2 border-black rounded-full flex items-center justify-center font-display font-bold text-xl text-black brutal-shadow-sm" aria-hidden="true">
                   {s.step}
                 </div>
-                <div className="text-center border-2 border-black px-3 py-2 bg-white brutal-shadow-sm w-full">
+                <div className="flex flex-col items-center justify-center text-center border-2 border-black px-3 py-3 bg-white brutal-shadow-sm w-full flex-1">
                   <p className="text-sm font-bold text-[#111111]">{s.title}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{s.desc}</p>
+                  <p className="text-xs text-gray-500 mt-1">{s.desc}</p>
                 </div>
               </div>
             ))}
@@ -242,82 +256,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── PRICING ─────────────────────────────────────────── */}
-      <section aria-label="AC Service Pricing Plans" className="border-t-2 border-black bg-[#f5f7fa]">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-14 md:py-20 text-center">
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#111111] mb-2">Year-Round Peace of Mind</h2>
-          <p className="text-sm text-[#4fc3f7] font-semibold italic mb-10">Skip the summer rush — annual plans save up to 30%</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-left">
-            {[
-              { name: "Cool Starter", price: "₹1,999", sub: "/year", features: ["2 Free Services", "Priority Booking", "10% off repairs"], popular: false },
-              { name: "Bengaluru Pro", price: "₹3,499", sub: "/year", features: ["3 Free Services", "Same-day service", "20% off all repairs", "Energy audit included"], popular: true },
-              { name: "Villa Elite", price: "₹5,999", sub: "/year", features: ["4+ AC units", "Dedicated Technician", "24/7 emergency support", "All spares included"], popular: false },
-            ].map((plan, i) => (
-              <div key={i} className={`card-lift bg-white p-6 flex flex-col gap-4 ${plan.popular ? "border-[#4fc3f7] border-4" : ""}`}>
-                {plan.popular && (
-                  <div className="absolute -mt-9 ml-[-2px]">
-                    <span className="bg-[#0d47a1] text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 border-2 border-black">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-                <h3 className="text-base font-bold text-[#111111] font-sans mt-2">{plan.name}</h3>
-                <div className="flex items-end gap-1.5">
-                  <span className="font-display text-4xl font-bold text-[#111111]">{plan.price}</span>
-                  <span className="text-sm text-gray-400 mb-1">{plan.sub}</span>
-                </div>
-                <ul className="space-y-2.5 flex-1">
-                  {plan.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2.5 text-sm">
-                      <Check className="w-4 h-4 text-[#4fc3f7] shrink-0" aria-hidden="true" /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/contact">
-                  <button className={`btn-lift w-full mt-4 font-bold text-sm uppercase tracking-wider py-3 border-2 border-black ${plan.popular ? "bg-[#4fc3f7] text-black" : "bg-white text-black"}`}>
-                    Choose Plan
-                  </button>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA FORM ────────────────────────────────────────── */}
-      <section aria-label="Contact Breezyair" className="border-t-2 border-black bg-[#4fc3f7]">
-        <div className="max-w-4xl mx-auto px-4 md:px-8 py-16 md:py-24 text-center flex flex-col gap-8 items-center">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-black">
-            AC acting up? We got this.
-            <span className="block mt-1 text-xl font-normal italic font-display">Drop your details, we&apos;ll call you back!</span>
-          </h2>
-
-          <div className="border-2 border-black bg-white brutal-shadow text-left w-full max-w-2xl p-6 md:p-8">
-            <form className="flex flex-col gap-4" aria-label="AC service request form">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="cta-name" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Your Name</label>
-                  <Input id="cta-name" placeholder="e.g. Suresh Kumar" />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="cta-phone" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Phone Number</label>
-                  <Input id="cta-phone" type="tel" placeholder="+91 98765 43210" />
-                </div>
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="cta-issue" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">What&apos;s wrong?</label>
-                <textarea
-                  id="cta-issue"
-                  className="w-full border-2 border-black bg-white px-3 py-2.5 text-sm min-h-[90px] resize-none focus:outline-none focus:ring-2 focus:ring-[#4fc3f7]"
-                  placeholder="AC not cooling, making noise, leaking water..."
-                />
-              </div>
-              <button type="submit" className="btn-lift w-full py-4 bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider border-2 border-black">
-                GET CALLBACK NOW
-              </button>
-              <p className="text-center font-display italic text-xs text-gray-400">Asad usually replies within 30 minutes</p>
-            </form>
-          </div>
+      {/* ── PRICE ESTIMATOR ──────────────────────────────── */}
+      <section aria-label="Price estimator" className="border-t-2 border-black bg-[#f5f7fa]">
+        <div className="max-w-5xl mx-auto px-4 md:px-8 py-14 md:py-20">
+          <AnimateIn>
+            <div className="text-center mb-8">
+              <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#111111] mb-2">What will it cost?</h2>
+              <p className="text-sm text-gray-500 max-w-lg mx-auto">
+                Use the estimator below for an instant ballpark. Every price is transparent — Asad confirms the final quote on-site before starting.
+              </p>
+            </div>
+          </AnimateIn>
+          <AnimateIn animation="pop-in" delay={0.15}>
+            <PriceEstimator />
+          </AnimateIn>
         </div>
       </section>
 

@@ -1,31 +1,39 @@
 /**
- * 🎙️ VOICE DOOR — OPEN NODE into Agent 1 (Breezy).
+ * 🎙️ VOICE DOOR — PARKED.
  *
- * A connected voice provider (Vapi / Retell / ElevenLabs / Twilio) POSTs the
- * caller transcript here; we run the SAME Breezy brain and return reply text for
- * the provider to speak. Audio synthesis itself is the open node in
- * lib/agent/adapters/voice.ts (`speak()`), intentionally not implemented yet.
- *
- * This route already works for TEXT so you can test the full pipeline (diagnose
- * → quote → capture → book) before any telephony is wired.
+ * The voice channel is intentionally switched off for now while we focus on the
+ * web chat + CRM. The wiring for it (same Breezy brain, adapters/voice.ts) is
+ * kept intact so it can be re-enabled later without a rewrite — flip
+ * VOICE_PARKED to false (and set AI_GATEWAY_API_KEY) to bring it back.
  */
 
 import { breezyAgent } from "@/lib/agent/breezy";
 import { VOICE_CONNECTED, type VoiceTurn } from "@/lib/agent/adapters/voice";
+import { IS_MODEL_CONNECTED } from "@/lib/agent/model";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
+/** Master switch. While true, the voice endpoint responds 503 and never runs the agent. */
+const VOICE_PARKED = true;
+
 export async function POST(req: Request) {
+  if (VOICE_PARKED) {
+    return Response.json(
+      { error: "Voice channel is parked. Use the web chat (/api/agent/breezy) or the booking form for now." },
+      { status: 503 }
+    );
+  }
+
   const turn = (await req.json()) as Partial<VoiceTurn>;
 
   if (!turn.transcript) {
     return Response.json({ error: "Missing 'transcript'." }, { status: 400 });
   }
 
-  if (!process.env.AI_GATEWAY_API_KEY && !process.env.VERCEL) {
+  if (!IS_MODEL_CONNECTED) {
     return Response.json(
-      { error: "Breezy is not connected yet. Set AI_GATEWAY_API_KEY to switch the agent on." },
+      { error: "Breezy is not connected yet. Set an LLM API key (AI_GATEWAY_API_KEY, KIMI_API_KEY, MINIMAX_API_KEY, DEEPSEEK_API_KEY, or OPENAI_API_KEY) in .env.local to switch the agent on." },
       { status: 503 }
     );
   }
@@ -45,7 +53,7 @@ export async function POST(req: Request) {
 export function GET() {
   return Response.json({
     node: "voice",
-    status: "open — awaiting provider",
-    connect: "Point your voice provider's webhook here (POST { transcript, callerId?, source, languageHint? }).",
+    status: VOICE_PARKED ? "parked" : "open — awaiting provider",
+    connect: "Set VOICE_PARKED=false in this route, then point your voice provider's webhook here.",
   });
 }

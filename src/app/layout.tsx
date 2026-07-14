@@ -1,9 +1,23 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { Caveat } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import { BreezyWidget } from "@/components/agent/breezy-widget";
 import Script from "next/script";
+import { ClientWidgetLoader } from "@/components/layout/client-widget-loader";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-display",
+});
 
 /* ── Global SEO metadata ─────────────────────────────────── */
 export const metadata: Metadata = {
@@ -84,10 +98,10 @@ export const metadata: Metadata = {
     },
   },
 
-  /* ── Verification (update with real tokens) ──────────── */
-  verification: {
-    google: "REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_TOKEN",
-  },
+  /* ── Verification (set GOOGLE_SITE_VERIFICATION in .env.local) ────── */
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
 
   /* ── Icons — doodle mascot favicon ──────────────────── */
   icons: {
@@ -109,7 +123,7 @@ const jsonLd = {
         "Expert AC repair, deep cleaning, maintenance and installation services in Bengaluru by certified HVAC technicians.",
       url: "https://breezyair.co",
       telephone: "+918660174569",
-      email: "asadkhanassu000@gmail.com",
+      email: "hellobreezyair@gmail.com",
       logo: "https://breezyair.co/logo-vertical.png",
       image: "https://breezyair.co/og-image.png",
       priceRange: "₹₹",
@@ -149,22 +163,14 @@ const jsonLd = {
         "AC Maintenance",
         "AC Deep Cleaning",
         "AC Installation",
-        "HVAC Energy Audit",
       ],
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: "4.9",
-        reviewCount: "500",
-        bestRating: "5",
-        worstRating: "1",
-      },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "HVAC Services",
         itemListElement: [
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Deep AC Cleaning" }, price: "999", priceCurrency: "INR" },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Quick AC Repair" }, price: "499", priceCurrency: "INR" },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Energy Audit" }, price: "799", priceCurrency: "INR" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Wet Deep Clean" }, price: "899", priceCurrency: "INR" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Repair" }, price: "499", priceCurrency: "INR" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Installation" }, price: "1499", priceCurrency: "INR" },
         ],
       },
     },
@@ -184,9 +190,9 @@ const jsonLd = {
     {
       "@type": "FAQPage",
       mainEntity: [
-        { "@type": "Question", name: "How much does AC repair cost in Bengaluru?", acceptedAnswer: { "@type": "Answer", text: "AC repair at Breezyair starts from ₹499 for quick repairs. Deep cleaning starts at ₹999. We provide transparent pricing before starting any work — no hidden charges." } },
+        { "@type": "Question", name: "How much does AC repair cost in Bengaluru?", acceptedAnswer: { "@type": "Answer", text: "AC repair at Breezyair starts from ₹499 for quick repairs. Deep cleaning starts at ₹899. We provide transparent pricing before starting any work — no hidden charges." } },
         { "@type": "Question", name: "Do you offer same-day AC service in Bengaluru?", acceptedAnswer: { "@type": "Answer", text: "Yes! Breezyair offers same-day AC repair and maintenance across Indiranagar, Koramangala, Whitefield, and most of Bengaluru. Call +91 8660174569 for emergency bookings." } },
-        { "@type": "Question", name: "Are your AC technicians certified?", acceptedAnswer: { "@type": "Answer", text: "All Breezyair technicians are NATE-certified, background-verified professionals with 10+ years of experience in HVAC repair and maintenance." } },
+        { "@type": "Question", name: "Are your AC technicians certified?", acceptedAnswer: { "@type": "Answer", text: "All Breezyair technicians are industry-certified, background-verified professionals with 10+ years of experience in HVAC repair and maintenance." } },
         { "@type": "Question", name: "What areas in Bengaluru do you serve?", acceptedAnswer: { "@type": "Answer", text: "We serve Indiranagar, Koramangala, Whitefield, HSR Layout, Marathahalli, and the wider Bengaluru metropolitan area." } },
       ],
     },
@@ -195,18 +201,13 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" className="h-full antialiased scroll-smooth">
+    <html lang="en-IN" className={`h-full antialiased scroll-smooth ${inter.variable} ${caveat.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
         <meta name="theme-color" content="#4fc3f7" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <link rel="canonical" href="https://breezyair.co" />
+        {/* Canonical URLs are emitted per-page via each route's `metadata.alternates.canonical`.
+            Do NOT hardcode a global canonical here — it would override every subpage. */}
       </head>
       <body className="min-h-full flex flex-col bg-white text-[#111111]">
         {/* JSON-LD structured data */}
@@ -220,7 +221,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <Footer />
-        <BreezyWidget />
+        <ClientWidgetLoader />
       </body>
     </html>
   );

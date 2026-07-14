@@ -51,6 +51,7 @@ export interface VoiceReply {
  * the audio-ready reply. Until then the /api/agent/voice route still runs the
  * agent brain and returns text, so you can test the pipeline before wiring audio.
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function speak(_reply: VoiceReply): Promise<never> {
   throw new Error(
     "Voice node is open but not connected. Set VOICE_PROVIDER and implement speak() in adapters/voice.ts to connect Vapi/Retell/ElevenLabs/Twilio."

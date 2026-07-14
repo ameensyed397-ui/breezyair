@@ -1,7 +1,8 @@
-import { CheckCircle2, MapPin, ArrowRight } from "lucide-react";
+import { CheckCircle2, MapPin, ArrowRight, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "About Asad Khan | Breezyair's Lead HVAC Technician",
@@ -39,6 +40,7 @@ export default function About() {
       <section aria-label="Our story" className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-10 md:pt-16 pb-14">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div className="flex flex-col gap-5">
+            <Breadcrumbs items={[{ label: "About" }]} />
             <p className="text-[10px] font-bold uppercase tracking-widest text-[#4fc3f7]">Our story</p>
             <h1 className="flex flex-col gap-1">
               <span className="font-sans font-black text-4xl sm:text-5xl md:text-6xl text-[#111111] leading-[1.05]">The AC guy your</span>
@@ -53,13 +55,20 @@ export default function About() {
             </p>
             <p className="text-sm text-gray-500 leading-relaxed max-w-md">
               Breezyair is different. It&apos;s me — Asad — showing up at your door, treating your home like mine, and charging
-              you what the job actually costs.
+              you what the job actually costs. Same technician every time. No strangers, no surprises.
             </p>
-            <Link href="/book" className="w-fit">
-              <button className="btn-lift bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 border-black inline-flex items-center gap-2">
-                Book with Asad <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </button>
-            </Link>
+            <div className="flex flex-wrap gap-3 mt-2">
+              <Link href="/book" className="w-fit">
+                <button className="btn-lift bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 border-black inline-flex items-center gap-2">
+                  Book with Asad <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </button>
+              </Link>
+              <a href="tel:+918660174569" className="w-fit">
+                <button className="btn-lift bg-white text-black font-bold text-sm uppercase tracking-wider px-6 py-3 border-2 border-black inline-flex items-center gap-2">
+                  <Phone className="w-4 h-4" aria-hidden="true" /> Call Asad
+                </button>
+              </a>
+            </div>
           </div>
 
           {/* Portrait with offset block */}
@@ -165,9 +174,11 @@ export default function About() {
             <Link href="/book">
               <button className="btn-lift bg-black text-white font-bold text-sm uppercase tracking-wider px-8 py-4 border-2 border-black">Book a Service</button>
             </Link>
-            <Link href="/contact">
-              <button className="btn-lift bg-white text-black font-bold text-sm uppercase tracking-wider px-8 py-4 border-2 border-black">Get in touch</button>
-            </Link>
+            <a href="tel:+918660174569">
+              <button className="btn-lift bg-white text-black font-bold text-sm uppercase tracking-wider px-8 py-4 border-2 border-black inline-flex items-center gap-2">
+                <Phone className="w-4 h-4" aria-hidden="true" /> Call +91 8660174569
+              </button>
+            </a>
           </div>
         </div>
       </section>

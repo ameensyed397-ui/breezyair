@@ -87,8 +87,9 @@ export function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden p-2 border-2 border-black bg-white text-[#111111]"
+            className="lg:hidden p-3 border-2 border-black bg-white text-[#111111]"
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square">
               {mobileOpen ? (

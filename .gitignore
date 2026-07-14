@@ -51,3 +51,8 @@ coverage/
 
 # Misc
 *.pem
+
+# Dev artifacts
+.claude/
+.tmp-claude/
+UX-AUDIT-REPORT.html

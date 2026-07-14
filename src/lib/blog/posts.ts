@@ -10,7 +10,8 @@ export type Block =
   | { type: "p"; text: string }
   | { type: "h2"; text: string }
   | { type: "ul"; items: string[] }
-  | { type: "quote"; text: string };
+  | { type: "quote"; text: string }
+  | { type: "image"; src: string; alt: string };
 
 export interface Post {
   slug: string;
@@ -22,8 +23,8 @@ export interface Post {
   category: string;
   /** Rough read time label, e.g. "5 min read" */
   readTime: string;
-  /** Emoji used as the cover motif in the mascot design */
-  emoji: string;
+  /** Image used as the cover art for the post */
+  imageSrc: string;
   body: Block[];
 }
 
@@ -37,12 +38,13 @@ export const POSTS: Post[] = [
     author: "Asad Khan",
     category: "AC Repair",
     readTime: "5 min read",
-    emoji: "❄️",
+    imageSrc: "/blog/checklist.png",
     body: [
       { type: "p", text: "Bengaluru summers are getting longer, and the most common call we get at Breezyair is simple: 'My AC is running but not cooling.' Before you spend money on a technician, run through this quick checklist — you might save yourself a service charge." },
       { type: "h2", text: "1. Check the mode and temperature" },
       { type: "p", text: "It sounds obvious, but nine times out of ten a remote got bumped into 'Fan' or 'Dry' mode, or the setpoint is at 26°C. Set it to 'Cool' and drop it to 18–20°C to test." },
       { type: "h2", text: "2. Clean the filters" },
+      { type: "image", src: "/blog/cleaning.png", alt: "Cleaning AC filters" },
       { type: "p", text: "Clogged filters are the number-one cause of weak cooling. Pop open the indoor unit, slide out the mesh filters, and rinse them under a tap. Let them dry fully before refitting. Do this every 15 days during summer." },
       { type: "h2", text: "3. Look at the outdoor unit" },
       { type: "ul", items: [
@@ -69,7 +71,7 @@ export const POSTS: Post[] = [
     author: "Asad Khan",
     category: "Maintenance",
     readTime: "4 min read",
-    emoji: "🗓️",
+    imageSrc: "/blog/calendar.png",
     body: [
       { type: "p", text: "Most manufacturers say 'service once a year.' That advice is written for temperate climates — not for a dusty, warm city where ACs run eight months of the year. Here's what we actually recommend for Bengaluru homes." },
       { type: "h2", text: "The Breezyair schedule" },
@@ -82,6 +84,7 @@ export const POSTS: Post[] = [
       { type: "h2", text: "Why twice a year matters here" },
       { type: "p", text: "Bengaluru's air carries a lot of fine construction dust. It settles on the evaporator coil and outdoor condenser, and within six months of heavy use, cooling efficiency drops noticeably — you feel it as higher electricity bills before you feel it as weak cooling." },
       { type: "h2", text: "The AMC maths" },
+      { type: "image", src: "/blog/savings.png", alt: "Saving money on AC maintenance" },
       { type: "p", text: "Two paid basic services cost around ₹1,000/year. Our Chill Basic AMC is ₹1,499/year and includes both visits, a health check, priority booking, and 10% off any repairs. For most single-AC homes, the AMC pays for itself the first time something needs fixing." },
       { type: "quote", text: "The cheapest AC repair is the one you never need. Regular servicing genuinely doubles the life of a unit — we see 12-year-old ACs running like new because the owner serviced them on schedule." },
       { type: "p", text: "Want us to remember for you? Our AMC plans include reminder calls so you never miss a service window." },
@@ -96,7 +99,7 @@ export const POSTS: Post[] = [
     author: "Asad Khan",
     category: "Buying Guide",
     readTime: "6 min read",
-    emoji: "🌬️",
+    imageSrc: "/blog/split-vs-window.png",
     body: [
       { type: "p", text: "We install both, so we have no reason to push one over the other. Here's how we'd advise a friend choosing between a split and a window AC for a Bengaluru home in 2026." },
       { type: "h2", text: "Go with a split AC if..." },

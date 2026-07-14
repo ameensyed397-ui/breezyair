@@ -1,7 +1,8 @@
-import { Input } from "@/components/ui/input";
-import { Phone, Mail, Globe, MapPin } from "lucide-react";
+import { Phone, Mail, Globe, MapPin, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { ContactForm } from "@/components/ui/contact-form";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Contact Breezyair | Book AC Service in Bengaluru",
@@ -25,6 +26,7 @@ export default function Contact() {
 
           {/* ── LEFT: Contact info ───────────────────────── */}
           <div className="flex flex-col gap-6">
+            <Breadcrumbs items={[{ label: "Contact" }]} />
 
             <div className="inline-block bg-[#4fc3f7] text-black text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 border-2 border-black w-fit brutal-shadow-sm">
               WE ARE OPEN
@@ -52,7 +54,8 @@ export default function Contact() {
             <div className="flex flex-col gap-3">
               {[
                 { icon: Phone, label: "Call Me Directly",  value: "+91 8660174569",            href: "tel:+918660174569" },
-                { icon: Mail,  label: "Email Anytime",     value: "asadkhanassu000@gmail.com",  href: "mailto:asadkhanassu000@gmail.com" },
+                { icon: MessageCircle, label: "WhatsApp Us",  value: "Chat on WhatsApp",        href: "https://wa.me/918660174569" },
+                { icon: Mail,  label: "Email Anytime",     value: "hellobreezyair@gmail.com",  href: "mailto:hellobreezyair@gmail.com" },
                 { icon: Globe, label: "Visit Our Website", value: "www.breezyair.co",           href: "https://breezyair.co" },
               ].map((c, i) => (
                 <a
@@ -89,82 +92,8 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* ── RIGHT: Form ──────────────────────────────── */}
-          <div className="border-2 border-black bg-white brutal-shadow">
-
-            {/* Form header with indoor doodle mascot */}
-            <div className="border-b-2 border-black p-5 bg-[#e8f4fd] flex flex-col items-center gap-3 text-center">
-              <div className="w-20 h-20">
-                <Image
-                  src="/mascot-indoor.png"
-                  alt="Breezyair spinning-eyes AC mascot looking stressed"
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <div>
-                <h2 className="font-display text-2xl italic text-[#4fc3f7] font-bold leading-tight">
-                  Is your AC in this state?
-                </h2>
-                <p className="text-xs text-gray-400 mt-0.5">We understand the frustration — we got you!</p>
-              </div>
-            </div>
-
-            <form className="p-5 md:p-7 flex flex-col gap-4" aria-label="AC service booking form">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-name" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Your Name</label>
-                  <Input id="contact-name" placeholder="e.g. Suresh Kumar" />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="contact-phone" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Phone Number</label>
-                  <Input id="contact-phone" type="tel" placeholder="+91 00000 00000" />
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="contact-service" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Service Needed</label>
-                <select
-                  id="contact-service"
-                  className="h-11 w-full border-2 border-black bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4fc3f7]"
-                >
-                  <option>AC Repair &amp; Maintenance</option>
-                  <option>Deep AC Cleaning</option>
-                  <option>New Installation</option>
-                  <option>Energy Audit</option>
-                  <option>Annual Maintenance Plan</option>
-                  <option>Emergency Repair</option>
-                </select>
-              </div>
-
-              <div className="flex flex-col gap-1.5">
-                <label htmlFor="contact-message" className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Describe the Problem</label>
-                <textarea
-                  id="contact-message"
-                  className="w-full border-2 border-black bg-white px-3 py-2.5 text-sm min-h-[110px] resize-none focus:outline-none focus:ring-2 focus:ring-[#4fc3f7]"
-                  placeholder="AC not cooling, making noise, leaking water..."
-                />
-              </div>
-
-              <div className="flex items-center gap-2.5">
-                <input type="checkbox" id="urgent-contact" className="w-4 h-4 cursor-pointer accent-[#4fc3f7]" />
-                <label htmlFor="urgent-contact" className="text-sm font-semibold text-[#4fc3f7] cursor-pointer">
-                  This is an urgent repair!
-                </label>
-              </div>
-
-              <button
-                type="submit"
-                className="btn-lift w-full bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider py-4 border-2 border-black mt-1"
-              >
-                SEND MESSAGE
-              </button>
-
-              <p className="text-center font-display italic text-xs text-gray-400 mt-1">
-                Asad usually replies within 30 Mins
-              </p>
-            </form>
+          <div className="w-full max-w-md mx-auto lg:mx-0 lg:ml-auto">
+            <ContactForm />
           </div>
         </div>
       </section>
@@ -181,13 +110,13 @@ export default function Contact() {
           referrerPolicy="no-referrer-when-downgrade"
           title="Breezyair service area — Indiranagar, Bengaluru"
         />
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 border-2 border-black bg-white brutal-shadow flex items-center gap-3 px-4 py-3 min-w-max">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-md border-2 border-black bg-white brutal-shadow flex items-center gap-3 px-4 py-3">
           <div className="w-8 h-8 bg-[#ef4444] border-2 border-black flex items-center justify-center rounded-full shrink-0" aria-hidden="true">
             <MapPin className="w-4 h-4 text-white" />
           </div>
-          <div>
+          <div className="min-w-0">
             <p className="text-sm font-bold text-[#111111]">Serving Bengaluru &amp; Surrounding Areas</p>
-            <p className="text-xs text-gray-400">Indiranagar · Koramangala · Whitefield · HSR Layout</p>
+            <p className="text-xs text-gray-400">Indiranagar · Koramangala · Whitefield · HSR Layout · Bellandur · Marathahalli</p>
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 import { createAgentUIStreamResponse, type UIMessage } from "ai";
 import { breezyAgent } from "@/lib/agent/breezy";
+import { IS_MODEL_CONNECTED } from "@/lib/agent/model";
 
 // The Breezy agent runs on Node (Fluid Compute) so tool adapters can reach
 // external services (Notion, WhatsApp) later.
@@ -13,9 +14,9 @@ export const maxDuration = 60;
 export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
 
-  if (!process.env.AI_GATEWAY_API_KEY && !process.env.VERCEL) {
+  if (!IS_MODEL_CONNECTED) {
     return Response.json(
-      { error: "Breezy is not connected yet. Set AI_GATEWAY_API_KEY in .env.local to switch the agent on." },
+      { error: "Breezy is not connected yet. Set an LLM API key (AI_GATEWAY_API_KEY, KIMI_API_KEY, MINIMAX_API_KEY, DEEPSEEK_API_KEY, or OPENAI_API_KEY) in .env.local to switch the agent on." },
       { status: 503 }
     );
   }

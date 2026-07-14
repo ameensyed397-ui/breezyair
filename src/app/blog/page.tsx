@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import { getAllPosts, formatDate } from "@/lib/blog/posts";
@@ -42,8 +43,8 @@ export default function Blog() {
           <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16">
             <Link href={`/blog/${featured.slug}`} className="block card-lift bg-white no-underline group">
               <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="border-b-2 md:border-b-0 md:border-r-2 border-black bg-[#4fc3f7] flex items-center justify-center p-12 md:p-16">
-                  <span className="text-7xl md:text-8xl" aria-hidden="true">{featured.emoji}</span>
+                <div className="border-b-2 md:border-b-0 md:border-r-2 border-black bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] flex items-center justify-center p-12 md:p-16">
+                  <Image src={featured.imageSrc} alt={featured.title} width={160} height={160} className="w-32 h-32 md:w-40 md:h-40 object-contain mix-blend-multiply" />
                 </div>
                 <div className="p-6 md:p-8 flex flex-col gap-3">
                   <div className="flex items-center gap-3">
@@ -69,8 +70,8 @@ export default function Blog() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {rest.map((post) => (
               <Link key={post.slug} href={`/blog/${post.slug}`} className="card-lift bg-white flex flex-col no-underline group">
-                <div className="border-b-2 border-black bg-[#e8f4fd] flex items-center justify-center py-10">
-                  <span className="text-6xl" aria-hidden="true">{post.emoji}</span>
+                <div className="border-b-2 border-black bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] flex items-center justify-center py-10">
+                  <Image src={post.imageSrc} alt={post.title} width={100} height={100} className="w-24 h-24 object-contain mix-blend-multiply hover:scale-105 transition-transform" />
                 </div>
                 <div className="p-5 flex flex-col gap-2 flex-1">
                   <div className="flex items-center gap-2">

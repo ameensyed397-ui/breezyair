@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
@@ -43,6 +44,12 @@ function renderBlock(block: Block, i: number) {
         <blockquote key={i} className="border-l-4 border-[#4fc3f7] bg-[#f5f7fa] px-5 py-4 my-6 font-display text-xl italic text-[#111111]">
           {block.text}
         </blockquote>
+      );
+    case "image":
+      return (
+        <div key={i} className="my-8 flex justify-center w-full bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] border-2 border-black p-4 brutal-shadow-sm">
+          <Image src={block.src} alt={block.alt} width={400} height={400} className="w-full max-w-sm object-contain mix-blend-multiply" />
+        </div>
       );
   }
 }
@@ -109,7 +116,7 @@ export default async function Article({ params }: { params: Promise<{ slug: stri
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {related.map((r) => (
                 <Link key={r.slug} href={`/blog/${r.slug}`} className="card-lift bg-white p-5 flex items-start gap-4 no-underline group">
-                  <span className="text-4xl shrink-0" aria-hidden="true">{r.emoji}</span>
+                  <Image src={r.imageSrc} alt="" width={48} height={48} className="w-12 h-12 object-contain shrink-0" />
                   <div>
                     <h3 className="text-sm font-bold text-[#111111] leading-snug group-hover:text-[#0d47a1] transition-colors">{r.title}</h3>
                     <span className="mt-2 text-[#4fc3f7] text-xs font-bold inline-flex items-center gap-1">Read <ArrowRight className="w-3 h-3" aria-hidden="true" /></span>
