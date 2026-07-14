@@ -235,7 +235,10 @@ export function PriceEstimator() {
       </p>
 
       {/* CTA */}
-      <Link href={`/book?service=${service.id === "deep" ? "wet-clean" : service.id === "install" ? "installation" : service.id === "uninstall" ? "uninstallation" : service.id}`} className="block">
+      <Link
+        href={`/book?service=${service.id === "basic" ? "basic-service" : service.id === "full" ? "full-service" : service.id === "deep" ? "wet-clean" : service.id === "install" ? "installation" : service.id === "uninstall" ? "uninstallation" : service.id}${service.id !== "install" ? `&acCount=${acCount}` : ""}`}
+        className="block"
+      >
         <button className="btn-lift w-full bg-[#4fc3f7] text-black font-bold text-sm uppercase tracking-wider py-3 border-2 border-black inline-flex items-center justify-center gap-2">
           Book {service.name} <ArrowRight className="w-4 h-4" aria-hidden="true" />
         </button>

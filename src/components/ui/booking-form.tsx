@@ -63,10 +63,11 @@ function BookingFormInner() {
   const searchParams = useSearchParams();
   const initialService = searchParams.get("service") ?? "";
   const initialLocality = searchParams.get("locality") ?? "";
+  const initialAcCount = Math.min(10, Math.max(1, parseInt(searchParams.get("acCount") ?? "1", 10) || 1));
   const [step, setStep] = useState(initialService ? (initialLocality ? 3 : 2) : 1);
   const [service, setService] = useState(initialService);
   const [locality, setLocality] = useState(initialLocality);
-  const [acCount, setAcCount] = useState(1);
+  const [acCount, setAcCount] = useState(initialAcCount);
   const [slot, setSlot] = useState({ date: "", time: "" });
   const [form, setForm] = useState({ name: "", phone: "", address: "", problem: "", urgent: false });
   const [honeyPot, setHoneyPot] = useState("");
@@ -85,8 +86,26 @@ function BookingFormInner() {
   const selectedLocality = LOCALITIES.find((l) => l.value === locality);
 
   const isPerAc = selectedService?.perAc ?? false;
-  const unitCount = isPerAc ? acCount : 1;
-  const totalCost = (selectedService?.price ?? 0) * unitCount;
+  const isOneOff = !selectedService?.value.startsWith("amc-") && selectedService?.value !== "installation" && selectedService?.value !== "uninstallation" && selectedService?.value !== "inspection";
+  const showAcCount = isPerAc || isOneOff;
+
+  const BUNDLES: Record<number, { savings: number; perAc?: number }> = {
+    1: { savings: 0 },
+    2: { savings: 99 },
+    3: { savings: 298 },
+  };
+
+  let totalCost: number;
+  if (isPerAc) {
+    totalCost = (selectedService?.price ?? 0) * acCount;
+  } else if (isOneOff && acCount >= 4) {
+    totalCost = 449 * acCount;
+  } else if (isOneOff && acCount >= 2) {
+    const bundle = BUNDLES[acCount] ?? { savings: 0 };
+    totalCost = (selectedService?.price ?? 0) * acCount - bundle.savings;
+  } else {
+    totalCost = (selectedService?.price ?? 0) * (acCount > 0 ? 1 : 1);
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +114,8 @@ function BookingFormInner() {
 
     const pricingNote = isPerAc
       ? `${selectedService?.display} x ${acCount} ACs = ₹${totalCost.toLocaleString("en-IN")}/yr`
+      : isOneOff && acCount > 1
+      ? `${selectedService?.display} x ${acCount} ACs = ₹${totalCost.toLocaleString("en-IN")}`
       : selectedService?.display;
 
     try {
@@ -113,7 +134,7 @@ function BookingFormInner() {
           slotTime: slot.time,
           service: selectedService?.value,
           amount: totalCost,
-          acCount: unitCount,
+          acCount: showAcCount ? acCount : 1,
           honeyPot,
         }),
       });
@@ -157,7 +178,7 @@ function BookingFormInner() {
         <div className="border-2 border-black bg-[#f5f7fa] p-4 text-left mb-6">
           <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Your booking summary</p>
           <p className="text-sm text-gray-500">Service: <span className="text-[#111111] font-bold">{selectedService?.label}</span></p>
-          {isPerAc && <p className="text-sm text-gray-500">ACs: <span className="text-[#111111] font-bold">{acCount} unit{acCount > 1 ? "s" : ""}</span></p>}
+          {showAcCount && acCount > 1 && <p className="text-sm text-gray-500">ACs: <span className="text-[#111111] font-bold">{acCount} unit{acCount > 1 ? "s" : ""}</span></p>}
           <p className="text-sm text-gray-500">Total: <span className="text-[#0d47a1] font-bold font-display text-lg">₹{totalCost.toLocaleString("en-IN")}{isPerAc ? "/yr" : ""}</span></p>
           <p className="text-sm text-gray-500">Area: <span className="text-[#111111] font-bold">{selectedLocality?.label}</span></p>
           {slot.date && <p className="text-sm text-gray-500">Date: <span className="text-[#111111] font-bold">{slot.date} ({slot.time})</span></p>}
@@ -338,8 +359,42 @@ function BookingFormInner() {
               </div>
             )}
 
-            {/* Fixed-price total for non-per-unit */}
-            {!isPerAc && (
+            {/* AC count for one-off services with bundle discount */}
+            {isOneOff && (
+              <div className="mt-4 pt-4 border-t-2 border-black">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Number of ACs</p>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setAcCount(Math.max(1, acCount - 1))}
+                    className="w-11 h-11 border-2 border-black bg-white font-bold text-lg hover:bg-gray-50 flex items-center justify-center"
+                    aria-label="Decrease AC count"
+                  >
+                    −
+                  </button>
+                  <span className="font-display text-3xl font-bold text-[#111111] w-12 text-center">{acCount}</span>
+                  <button
+                    onClick={() => setAcCount(Math.min(6, acCount + 1))}
+                    className="w-11 h-11 border-2 border-black bg-white font-bold text-lg hover:bg-gray-50 flex items-center justify-center"
+                    aria-label="Increase AC count"
+                  >
+                    +
+                  </button>
+                  <div className="ml-auto text-right">
+                    {acCount >= 4 ? (
+                      <p className="text-xs text-gray-500">{acCount} × ₹449/AC</p>
+                    ) : acCount >= 2 ? (
+                      <p className="text-xs text-[#4fc3f7] font-bold">Save ₹{(BUNDLES[acCount]?.savings ?? 0).toLocaleString("en-IN")}</p>
+                    ) : (
+                      <p className="text-xs text-gray-500">Single unit</p>
+                    )}
+                    <p className="font-display text-2xl font-bold text-[#0d47a1]">₹{totalCost.toLocaleString("en-IN")}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Fixed-price total for non-per-unit, non-one-off (installation, uninstallation, inspection, AMC) */}
+            {!isPerAc && !isOneOff && (
               <div className="mt-4 pt-4 border-t-2 border-black">
                 <div className="flex items-end justify-between">
                   <div>
