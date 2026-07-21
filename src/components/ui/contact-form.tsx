@@ -153,6 +153,11 @@ export function ContactForm() {
             <option>Annual Maintenance Plan</option>
             <option>Emergency Repair</option>
           </select>
+          {service === "AC Installation" && (
+            <p className="text-[11px] text-gray-500 leading-relaxed mt-1 border-l-2 border-[#ffb74d] pl-2">
+              Note: For 2nd hand AC or relocation installs, extra copper pipeline is not included and will be charged at ₹899/metre. Technician will confirm on-site.
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-1.5">

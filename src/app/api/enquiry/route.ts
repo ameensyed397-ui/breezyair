@@ -132,6 +132,7 @@ export async function POST(req: Request) {
       source: "Website",
       status: "New",
       consentGiven: consentGiven === true,
+      createdAt: new Date().toISOString(),
       transcript: type === "b2b" 
         ? `B2B Contract Request: Company: ${company}, Contact: ${name}, Email: ${email}, Type: ${businessType}, Units: ${units}, Msg: ${issueType}`
         : type === "footer"

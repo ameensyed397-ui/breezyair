@@ -10,7 +10,7 @@ const SERVICES = [
   { value: "basic-service", label: "AC Basic Service", price: 499, display: "₹499", icon: "🌬️", perAc: false, visits: null as string | null, features: ["Filter clean & coil check", "Performance test", "Cooling output check"] },
   { value: "full-service", label: "AC Full Service", price: 699, display: "₹699", icon: "🔧", perAc: false, visits: null, features: ["Indoor + outdoor unit service", "Fin straightening & coil wash", "Capacitor health check"] },
   { value: "wet-clean", label: "Wet Deep Clean", price: 899, display: "₹899", icon: "🫧", perAc: false, visits: null, features: ["High-pressure water jet wash", "Anti-bacterial foam treatment", "Drain line flush", "Coil & fin deep clean"] },
-  { value: "installation", label: "AC Installation", price: 1499, display: "₹1,499", icon: "⚡", perAc: false, visits: null, features: ["Wall mounting & bracket", "Piping up to 3m", "Wiring & gas charge", "Trial run & handover"] },
+  { value: "installation", label: "AC Installation", price: 1499, display: "₹1,499", icon: "⚡", perAc: false, visits: null, features: ["Wall mounting & bracket", "Piping up to 3m (new AC only)", "Wiring & gas charge", "Trial run & handover"] },
   { value: "uninstallation", label: "AC Uninstallation", price: 699, display: "₹699", icon: "🔩", perAc: false, visits: null, features: ["Gas recovery", "Dismount & pack", "Cap & seal outdoor unit"] },
   { value: "inspection", label: "Inspection Visit", price: 350, display: "₹350*", icon: "🔍", perAc: false, visits: null, features: ["10-minute on-site diagnosis", "Written quote for repair", "*Waived if you approve the work"] },
   { value: "amc-chill-basic", label: "AMC — Chill Basic", price: 1499, display: "₹1,499/yr", icon: "❄️", perAc: false, visits: "2 scheduled visits/year", features: ["Filter clean each visit", "Basic health check", "10% off all repairs", "Priority booking"] },
@@ -418,6 +418,21 @@ function BookingFormInner() {
                 ))}
               </ul>
             </div>
+
+            {/* Installation disclaimer for 2nd hand AC / relocation */}
+            {service === "installation" && (
+              <div className="mt-4 pt-4 border-t-2 border-black">
+                <div className="flex items-start gap-2 p-3 border-2 border-[#ffb74d] bg-[#fff8e1]">
+                  <span className="text-base shrink-0" aria-hidden="true">⚠️</span>
+                  <div>
+                    <p className="text-xs font-bold text-[#111111] mb-0.5">Important: 2nd hand AC or relocation installs</p>
+                    <p className="text-[11px] text-gray-600 leading-relaxed">
+                      The ₹1,499 installation price includes up to 3m of copper piping for <strong>brand-new AC units</strong>. If you are installing a <strong>2nd hand AC</strong> or <strong>relocating an existing AC</strong>, extra copper pipeline may be needed and will be charged separately at ₹899/metre. Our technician will confirm the exact piping requirement and cost on-site before starting any work.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <h2 className="font-display text-3xl font-bold text-[#111111] mb-6">Which area are you in?</h2>

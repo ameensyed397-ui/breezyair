@@ -57,6 +57,7 @@ export async function createLead(lead: Lead): Promise<{ id: string; persisted: b
       Source: { select: { name: lead.source } },
       Status: { select: { name: lead.status } },
       Consent: { checkbox: lead.consentGiven },
+      Created: { date: { start: lead.createdAt || new Date().toISOString() } },
       ...(lead.transcript ? { Transcript: { rich_text: text(lead.transcript) } } : {}),
     },
   } as CreatePageArgs;
@@ -223,6 +224,7 @@ export async function bookSlot(appointment: Appointment): Promise<{ id: string; 
       Slot: { date: { start: datePart } }, // Maps to Notion's Date property for Notion Calendar
       Locality: { select: { name: appointment.locality } },
       Status: { select: { name: appointment.status } },
+      Created: { date: { start: new Date().toISOString() } },
       ...(appointment.technician ? { Technician: { rich_text: text(appointment.technician) } } : {}),
     },
   } as CreatePageArgs;
