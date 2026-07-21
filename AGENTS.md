@@ -215,3 +215,42 @@ git commit -m "seo(layout): add Bing verification token"
 - Google Maps embed uses a static API URL — update coordinates if office moves
 - The Caveat font is loaded from Google Fonts — ensure internet access during development
 - `script` with `dangerouslySetInnerHTML` in layout.tsx is intentional (JSON-LD is safe static data)
+
+---
+
+## CRM Architecture (Notion Integration)
+
+### Data Flow
+```
+Forms → POST /api/enquiry → Zod validation → adapters/crm.ts → Notion (4 DBs)
+Chat  → /api/agent/breezy → LLM tools → crm.ts + notify.ts → Notion + WhatsApp
+Care  → /api/agent/care/run (cron) → queries Notion → WhatsApp follow-ups
+```
+
+### Notion Databases
+| Database | Env Var | Written By |
+|----------|---------|-----------|
+| Leads | `NOTION_LEADS_DB` | `createLead()` — all form types + chat agent |
+| Appointments | `NOTION_APPOINTMENTS_DB` | `bookSlot()` — booking form + chat agent |
+| AMC Contracts | `NOTION_AMC_DB` | `createAmcContract()` — AMC bookings |
+| B2B Leads | `NOTION_B2B_LEADS_DB` | `createB2bLead()` — B2B form |
+
+### Key Files
+| File | Role |
+|------|------|
+| `src/lib/agent/adapters/crm.ts` | Central Notion adapter — all CRUD operations |
+| `src/lib/agent/adapters/notify.ts` | WhatsApp notifications (confirmations + urgent alerts) |
+| `src/lib/agent/adapters/compliance.ts` | DND/IST compliance checks (currently stub) |
+| `src/app/api/enquiry/route.ts` | Unified form endpoint (4 form types) |
+| `src/app/api/agent/breezy/route.ts` | Chat agent endpoint |
+| `src/app/api/agent/care/run/` | Daily batch follow-up cron |
+| `NOTION_SETUP.md` | Database schemas + setup guide |
+
+### Known Issues (from smoke test)
+| Issue | Severity | Status |
+|-------|----------|--------|
+| Payment ID not persisted to CRM | HIGH | Known — needs Razorpay webhook |
+| No Razorpay webhook for payment confirmation | MEDIUM | Known — requires webhook endpoint |
+| No rate limiting on chat agent | MEDIUM | Known — add rate limiting |
+| DND compliance is a stub (`isOnDnd()` always returns false) | LOW | Known — needs DLT provider |
+| `NOTION_TECHNICIANS_DB` env var set but unused | LOW | Known — reserved for future |
