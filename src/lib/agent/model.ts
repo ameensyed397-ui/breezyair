@@ -11,8 +11,7 @@ export const IS_MODEL_CONNECTED = Boolean(
   process.env.MINIMAX_API_KEY ||
   process.env.DEEPSEEK_API_KEY ||
   process.env.OPENAI_API_KEY ||
-  process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
-  process.env.VERCEL // Vercel OIDC for Gateway
+  process.env.GOOGLE_GENERATIVE_AI_API_KEY
 );
 
 /**
@@ -26,7 +25,7 @@ export const IS_MODEL_CONNECTED = Boolean(
  * 6. Generic OpenAI-compatible endpoint (via OPENAI_API_KEY + OPENAI_BASE_URL)
  */
 function resolveModel() {
-  if (process.env.AI_GATEWAY_API_KEY || process.env.VERCEL) {
+  if (process.env.AI_GATEWAY_API_KEY) {
     // Open-weight default — no Claude/OpenAI key required. Override with BREEZY_MODEL.
     // Strong open alternatives on the gateway: "moonshotai/kimi-k2",
     // "deepseek/deepseek-v3.1", "zai/glm-4.6", "minimax/minimax-m2".
