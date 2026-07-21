@@ -8,10 +8,12 @@ APIs, conventions, and file structure may differ from your training data. Read r
 # Breezyair — Agent Handoff Documentation
 
 ## Project Overview
-Three-page HVAC service website (Home, Services, Contact) using the Next.js App Router.
+Multi-page HVAC service website (Home, Services, Contact, Blog, Book, Pricing, B2B, About) using the Next.js App Router with Sanity CMS for blog content.
 
 **Dev server**: `npm run dev` from `d:\Breezyair\web`  
-**Live URL**: `https://breezyair.co` (deploy via Vercel)
+**Live URL**: `https://breezyair.co` (deploy via Vercel)  
+**Blog CMS**: Sanity Studio at `https://breezyair-blog.sanity.studio`  
+**Repo**: `github.com/ameensyed397-ui/breezyair`
 
 ---
 
@@ -127,10 +129,39 @@ Each page has a UNIQUE hero. Do not duplicate content.
 | robots.txt     | `src/app/robots.ts` → `/robots.txt`   |
 | Canonical URLs | Set per page via `alternates.canonical` |
 | OG image       | `public/og-image.png` (1200×630)      |
+| llms.txt       | `public/llms.txt` (AI search visibility) |
+| Vercel Analytics | `src/app/layout.tsx` (Analytics component) |
 
 **To activate Google Search Console indexing:**
 1. Get verification token from [search.google.com/search-console](https://search.google.com/search-console)
 2. Replace `REPLACE_WITH_GOOGLE_SEARCH_CONSOLE_TOKEN` in `layout.tsx` → `metadata.verification.google`
+
+---
+
+## Performance — Lighthouse Audit History
+
+### v3 (current — after widget split + font preload)
+| Metric | Score | Previous |
+|--------|-------|----------|
+| Performance | 75-77 | 76 |
+| Accessibility | ~96 | 96 |
+| Best Practices | ~100 | 100 |
+| SEO | ~100 | 100 |
+| FCP | 1.6-2.2s | 2.5s |
+| LCP | 4.5-4.6s | 4.6s |
+| TBT | 230ms | 320ms |
+| CLS | 0 | 0 |
+
+**Optimizations applied:**
+- Hero image `sizes` prop on home + services pages
+- Font preloading (`preconnect` Google Fonts, `preload` hero image)
+- Footer converted to server component (removed unused useState)
+- `optimizePackageImports` for lucide-react, @sanity/client, react-markdown, ai, @ai-sdk/react
+- `serverExternalPackages: ["zod"]`
+- Split breezy-widget into lightweight launcher + lazy-loaded chat panel (defers ai-sdk/zod/react-markdown to chat open)
+- Next.js image formats: AVIF + WebP
+
+**Remaining LCP bottleneck:** ~4.5s LCP likely caused by Google Fonts render-blocking CSS + server TTFB to India. Next.js `next/font` already handles font optimization.
 
 ---
 

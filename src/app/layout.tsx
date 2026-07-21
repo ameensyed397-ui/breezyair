@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import Script from "next/script";
 import { ClientWidgetLoader } from "@/components/layout/client-widget-loader";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -116,11 +117,11 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "LocalBusiness",
+      "@type": "AirConditioningService",
       "@id": "https://breezyair.co/#business",
       name: "Breezyair",
       description:
-        "Expert AC repair, deep cleaning, maintenance and installation services in Bengaluru by certified HVAC technicians.",
+        "Expert AC repair, deep cleaning, maintenance and installation services in Bengaluru by certified HVAC technicians. Same-day service. Transparent pricing. No hidden costs.",
       url: "https://breezyair.co",
       telephone: "+918660174569",
       email: "hellobreezyair@gmail.com",
@@ -171,15 +172,29 @@ const jsonLd = {
           { "@type": "Offer", itemOffered: { "@type": "Service", name: "Wet Deep Clean" }, price: "899", priceCurrency: "INR" },
           { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Repair" }, price: "499", priceCurrency: "INR" },
           { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Installation" }, price: "1499", priceCurrency: "INR" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Basic Service" }, price: "499", priceCurrency: "INR" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Full Service" }, price: "699", priceCurrency: "INR" },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Inspection Visit" }, price: "350", priceCurrency: "INR" },
         ],
       },
+      founder: {
+        "@type": "Person",
+        name: "Asad Khan",
+        jobTitle: "Founder & Lead HVAC Technician",
+      },
+      sameAs: [
+        "https://www.instagram.com/breezyair",
+        "https://www.facebook.com/breezyair",
+        "https://www.linkedin.com/company/breezyair",
+        "https://x.com/breezyair",
+      ],
     },
     {
       "@type": "WebSite",
       "@id": "https://breezyair.co/#website",
       url: "https://breezyair.co",
       name: "Breezyair",
-      description: "Bengaluru's trusted HVAC service provider",
+      description: "Bengaluru's trusted HVAC service provider — same-day AC repair, deep cleaning, maintenance & installation",
       publisher: { "@id": "https://breezyair.co/#business" },
       potentialAction: {
         "@type": "SearchAction",
@@ -194,6 +209,8 @@ const jsonLd = {
         { "@type": "Question", name: "Do you offer same-day AC service in Bengaluru?", acceptedAnswer: { "@type": "Answer", text: "Yes! Breezyair offers same-day AC repair and maintenance across Indiranagar, Koramangala, Whitefield, and most of Bengaluru. Call +91 8660174569 for emergency bookings." } },
         { "@type": "Question", name: "Are your AC technicians certified?", acceptedAnswer: { "@type": "Answer", text: "All Breezyair technicians are industry-certified, background-verified professionals with 10+ years of experience in HVAC repair and maintenance." } },
         { "@type": "Question", name: "What areas in Bengaluru do you serve?", acceptedAnswer: { "@type": "Answer", text: "We serve Indiranagar, Koramangala, Whitefield, HSR Layout, Marathahalli, and the wider Bengaluru metropolitan area." } },
+        { "@type": "Question", name: "What is included in AC deep cleaning?", acceptedAnswer: { "@type": "Answer", text: "Wet deep clean includes high-pressure water jet wash, anti-bacterial foam treatment, drain line flush, and coil and fin deep clean. Starts at ₹899." } },
+        { "@type": "Question", name: "Do you offer annual maintenance contracts?", acceptedAnswer: { "@type": "Answer", text: "Yes! Breezyair offers three AMC plans — Chill Basic (₹1,499/yr, 2 visits), Bengaluru Cool (₹2,999/yr, 3 visits), and Villa Plan (₹1,999/AC/yr). All include priority booking and repair discounts." } },
       ],
     },
   ],
@@ -224,6 +241,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <Footer />
+        <Analytics />
         <ClientWidgetLoader />
       </body>
     </html>
