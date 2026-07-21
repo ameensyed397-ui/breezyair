@@ -91,6 +91,7 @@ export default function Services() {
                 src="/mascot-outdoor.png"
                 alt="Breezyair outdoor AC unit mascot — Expert Help for Bengaluru homes"
                 fill
+                sizes="(max-width: 768px) 260px, 400px"
                 className="object-contain"
                 priority
               />

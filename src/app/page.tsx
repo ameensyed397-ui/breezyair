@@ -113,6 +113,7 @@ export default function Home() {
                 src="/hero-mascot.png"
                 alt="Breezyair friendly indoor AC mascot waving"
                 fill
+                sizes="(max-width: 768px) 260px, 400px"
                 className="object-contain"
                 priority
               />

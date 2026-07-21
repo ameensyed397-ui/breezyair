@@ -1,8 +1,5 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 import { Phone, Mail, Clock, MapPin } from "lucide-react";
 
 export function Footer() {
