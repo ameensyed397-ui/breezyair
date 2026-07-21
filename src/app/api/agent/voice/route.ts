@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
   if (!IS_MODEL_CONNECTED) {
     return Response.json(
-      { error: "Breezy is not connected yet. Set an LLM API key (AI_GATEWAY_API_KEY, KIMI_API_KEY, MINIMAX_API_KEY, DEEPSEEK_API_KEY, or OPENAI_API_KEY) in .env.local to switch the agent on." },
+      { error: "Breezy is temporarily unavailable. Please try the booking form or call us directly." },
       { status: 503 }
     );
   }

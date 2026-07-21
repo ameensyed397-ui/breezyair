@@ -56,3 +56,5 @@ coverage/
 .claude/
 .tmp-claude/
 UX-AUDIT-REPORT.html
+lh*.json
+lighthouse-report*.json

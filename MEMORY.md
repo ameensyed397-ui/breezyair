@@ -191,6 +191,7 @@ Every shadow MUST use `#000000`. Never navy, blue, or any other color.
 - ⚠️ Unused default Next.js SVGs in `/public` (file.svg, globe.svg, etc.)
 - ⚠️ Pricing data duplicated across `price-estimator.tsx`, `booking-form.tsx`, and `pricing.ts`
 - ⚠️ Payment ID not persisted to CRM after successful Razorpay payment
+- ⚠️ Notion DBs need a `Created` Date property added (see `VERCEL_ENV_SETUP.md` + `NOTION_SETUP.md`)
 
 ---
 
@@ -220,6 +221,13 @@ de9f8eb 2026-07-07 chore: ignore local dev logs
 ---
 
 ## Session Log
+
+### 2026-07-21 — B2B Created Field, Vercel Env Setup Doc, Cleanup
+
+- **B2B Created field** — `createB2bLead` was missing the `Created` Date property even though `NOTION_SETUP.md` documented it. Added the property to the Notion write and passed `leadData.createdAt` from the enquiry route so B2B and Lead share the same timestamp.
+- **VERCEL_ENV_SETUP.md** — New deployment-time checklist. Documents every env var, which environments need it, and how to verify after deploy. Critical for the missing Vercel `GOOGLE_GENERATIVE_AI_API_KEY` issue.
+- **.env.example** — Added `NOTION_B2B_LEADS_DB` (was missing) and expanded `BREEZY_MODEL` examples to include direct Gemini usage.
+- **Untracked Lighthouse reports** — `lh3.json`, `lh4.json`, `lighthouse-report-v2.json` left out of repo; local dev artefacts only.
 
 ### 2026-07-21 — CRM Timestamps, Installation Disclaimer, Chatbot Fix
 

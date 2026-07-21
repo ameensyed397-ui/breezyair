@@ -159,6 +159,7 @@ export async function POST(req: Request) {
         message: issueType,
         source: "Website",
         status: "New",
+        createdAt: leadData.createdAt,
       });
     }
 
@@ -213,7 +214,10 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error("Enquiry API error:", error);
-    const message = error instanceof Error ? error.message : "Something went wrong.";
-    return Response.json({ error: message }, { status: 500 });
+    // JSON parse errors are client faults (400), not server faults (500).
+    if (error instanceof SyntaxError) {
+      return Response.json({ error: "Invalid request body." }, { status: 400 });
+    }
+    return Response.json({ error: "Something went wrong. Please try again or call us directly." }, { status: 500 });
   }
 }

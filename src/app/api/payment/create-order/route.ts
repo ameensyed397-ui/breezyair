@@ -9,7 +9,7 @@ const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 export async function POST(req: NextRequest) {
   if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
     return NextResponse.json(
-      { error: "Payment gateway not configured. Please add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET." },
+      { error: "Payment gateway is not configured yet. Please contact Breezyair support." },
       { status: 503 },
     );
   }

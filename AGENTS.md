@@ -245,6 +245,7 @@ Care  → /api/agent/care/run (cron) → queries Notion → WhatsApp follow-ups
 | `src/app/api/agent/breezy/route.ts` | Chat agent endpoint |
 | `src/app/api/agent/care/run/` | Daily batch follow-up cron |
 | `NOTION_SETUP.md` | Database schemas + setup guide |
+| `VERCEL_ENV_SETUP.md` | Production env var checklist (LLM, Notion, cron) |
 
 ### Known Issues (from smoke test)
 | Issue | Severity | Status |
