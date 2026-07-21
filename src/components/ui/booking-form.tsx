@@ -24,6 +24,7 @@ const LOCALITIES = [
   { value: "indiranagar", label: "Indiranagar" },
   { value: "whitefield", label: "Whitefield" },
   { value: "bellandur", label: "Bellandur" },
+  { value: "marathahalli", label: "Marathahalli" },
   { value: "other", label: "Other" },
 ];
 

@@ -28,6 +28,7 @@ const enquirySchema = z.object({
   amount: z.union([z.string(), z.number()]).optional(),
   acCount: z.union([z.string(), z.number()]).optional(),
   honeyPot: z.string().optional(),
+  consentGiven: z.boolean().optional(),
 });
 
 /** "amc-bengaluru-cool" → "Bengaluru Cool" */
@@ -95,6 +96,7 @@ export async function POST(req: Request) {
       amount,
       acCount,
       honeyPot,
+      consentGiven,
     } = parseResult.data;
 
     // ── HONEYPOT BOT DETECTION ───────────────────────────────
@@ -129,7 +131,7 @@ export async function POST(req: Request) {
       urgency: (urgency === "Urgent" || urgency === true) ? "Urgent" : "Normal",
       source: "Website",
       status: "New",
-      consentGiven: true,
+      consentGiven: consentGiven === true,
       transcript: type === "b2b" 
         ? `B2B Contract Request: Company: ${company}, Contact: ${name}, Email: ${email}, Type: ${businessType}, Units: ${units}, Msg: ${issueType}`
         : type === "footer"

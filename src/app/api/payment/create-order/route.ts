@@ -31,6 +31,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Valid amount required (in INR)" }, { status: 400 });
     }
 
+    if (amount < 50 || amount > 50000) {
+      return NextResponse.json({ error: "Amount must be between ₹50 and ₹50,000" }, { status: 400 });
+    }
+
     // Razorpay expects amount in paise
     const amountPaise = Math.round(amount * 100);
 
