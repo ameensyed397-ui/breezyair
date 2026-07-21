@@ -5,8 +5,8 @@ import postSchema from "./schemas/post";
 export default defineConfig({
   name: "breezyair-blog",
   title: "Breezyair Blog",
-  projectId: process.env.SANITY_STUDIO_PROJECT_ID ?? "",
-  dataset: process.env.SANITY_STUDIO_DATASET ?? "production",
+  projectId: "v624lop9",
+  dataset: "production",
   plugins: [structureTool()],
   schema: { types: [postSchema] },
 });
