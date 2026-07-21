@@ -4,14 +4,18 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { getAllPosts, getPost, formatDate, type Block } from "@/lib/blog/posts";
+import { getAllSlugsFromSanity } from "@/lib/sanity/queries";
 
-export function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const slugs = await getAllSlugsFromSanity();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) return { title: "Article not found | Breezyair" };
   const url = `https://breezyair.co/blog/${post.slug}`;
   return {
@@ -56,7 +60,7 @@ function renderBlock(block: Block, i: number) {
 
 export default async function Article({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await getPost(slug);
   if (!post) notFound();
 
   const jsonLd = {
@@ -70,7 +74,8 @@ export default async function Article({ params }: { params: Promise<{ slug: stri
     mainEntityOfPage: `https://breezyair.co/blog/${post.slug}`,
   };
 
-  const related = getAllPosts().filter((p) => p.slug !== post.slug).slice(0, 2);
+  const allPosts = await getAllPosts();
+  const related = allPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
     <div className="flex flex-col w-full">

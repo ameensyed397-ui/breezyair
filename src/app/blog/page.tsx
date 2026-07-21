@@ -4,6 +4,8 @@ import { ArrowRight, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import { getAllPosts, formatDate } from "@/lib/blog/posts";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "AC Care Blog | Tips, Guides & Advice | Breezyair Bengaluru",
   description:
@@ -16,8 +18,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Blog() {
-  const posts = getAllPosts();
+export default async function Blog() {
+  const posts = await getAllPosts();
   const [featured, ...rest] = posts;
 
   return (
