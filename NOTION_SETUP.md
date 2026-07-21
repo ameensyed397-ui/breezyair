@@ -14,14 +14,14 @@ these steps once, then set the env vars — no code changes needed.
 Create two databases (a third is optional). Property **names and types must match
 exactly** — the adapter maps onto these.
 
-### Timestamps (automatic)
+### Timestamps
 
-You do **not** need to store a timestamp yourself. Every Notion row automatically
-records when it was created. To see it, open each database → **+ (new property)** →
-type **Created time** (and optionally **Last edited time**). Notion back-fills it
-for all rows, including existing ones. Sort/filter your Leads view by **Created
-time** to see newest first. The app never writes this — Notion handles it — so
-there's zero risk to lead capture.
+The adapter writes an explicit **`Created`** Date property on every lead, appointment, and
+B2B lead. This is the primary field for FIFO job sorting — sort your Leads view
+by **Created** (ascending) to process oldest leads first.
+
+Notion also has a built-in **Created time** property type (auto-populated, read-only).
+You can add it as a secondary timestamp, but the adapter does not use it.
 
 ### Leads  → `NOTION_LEADS_DB`
 
@@ -35,6 +35,7 @@ there's zero risk to lead capture.
 | `Source`     | Select     | Website, Call-In, Missed-Call, WhatsApp      |
 | `Status`     | Select     | New, Contacted, Booked, Serviced, Closed     |
 | `Consent`    | Checkbox   | Customer agreed to be contacted              |
+| `Created`    | **Date**   | When the lead was created — **sort by this for FIFO** |
 | `Transcript` | Text       | Optional conversation/notes summary          |
 
 ### Appointments  → `NOTION_APPOINTMENTS_DB`
@@ -46,6 +47,7 @@ there's zero risk to lead capture.
 | `Slot`       | **Date** | The booking date — shows up on Notion Calendar          |
 | `Locality`   | Select   | Same options as Leads                                    |
 | `Status`     | Select   | Scheduled, En Route, Done, No-show                       |
+| `Created`    | **Date** | When the appointment was booked — **sort by this for FIFO** |
 | `Technician` | Text     | Optional                                                 |
 
 > **Note:** `Slot` must be a **Date** property (not Text) so appointments appear
@@ -67,6 +69,7 @@ Dedicated database for commercial enquiries — separates B2B sales pipeline fro
 | `Message`       | Text       | Requirements / additional details             |
 | `Source`        | Select     | Website, Call-In, Referral                    |
 | `Status`        | Select     | New, Survey Scheduled, Quoted, Contracted, Closed |
+| `Created`       | **Date**   | When the enquiry was submitted — **sort by this for FIFO** |
 
 > B2B enquiries write to both the general Leads DB (for CRM consistency) AND
 > this dedicated B2B Leads DB (for sales pipeline tracking). Set
