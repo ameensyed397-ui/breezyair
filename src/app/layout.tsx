@@ -206,6 +206,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <meta name="theme-color" content="#4fc3f7" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preload" as="image" href="/hero-mascot.png" />
         {/* Canonical URLs are emitted per-page via each route's `metadata.alternates.canonical`.
             Do NOT hardcode a global canonical here — it would override every subpage. */}
       </head>

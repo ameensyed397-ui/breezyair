@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn.sanity.io" },
     ],
   },
+  serverExternalPackages: ["zod"],
+  experimental: {
+    optimizePackageImports: ["lucide-react", "@sanity/client", "react-markdown", "ai", "@ai-sdk/react"],
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
