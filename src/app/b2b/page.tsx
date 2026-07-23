@@ -14,11 +14,13 @@ export const metadata: Metadata = {
   description:
     "Annual maintenance contracts for offices, restaurants, clinics and co-working spaces in Bengaluru. Split, cassette, ductable & VRF systems serviced. Priority SLA. GST invoicing. Free site survey.",
   alternates: { canonical: "https://breezyair.co/b2b" },
+  keywords: ["Commercial AC contracts Bengaluru", "B2B HVAC AMC", "Bengaluru HVAC consultant", "HVAC contractor", "VRF AC installation", "AC Ducts installations"],
   openGraph: {
     title: "Breezyair Commercial — AC Contracts for Bengaluru Businesses",
     description:
       "Priority SLA, dedicated technician, GST invoicing. Split, cassette, ductable & VRF systems. Free site survey.",
     url: "https://breezyair.co/b2b",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };
 
@@ -111,9 +113,26 @@ const steps = [
   { num: "05", title: "Contract live \u2014 first service within 2 weeks", desc: "Sign the contract, we schedule the baseline service. Every unit is serviced, photographed, and reported." },
 ];
 
-export default function B2B() {
+export default function B2b() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "Commercial AC Maintenance Contracts",
+    provider: {
+      "@type": "LocalBusiness",
+      name: "Breezyair",
+      url: "https://breezyair.co"
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Bengaluru"
+    },
+    description: "Annual maintenance contracts for offices, restaurants, clinics and co-working spaces in Bengaluru. Split, cassette, ductable & VRF systems serviced."
+  };
+
   return (
     <div className="flex flex-col w-full">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ── 1. HERO ──────────────────────────────────────────── */}
       <section aria-label="B2B hero" className="bg-[#0d47a1] border-b-2 border-black">

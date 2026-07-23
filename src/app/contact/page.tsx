@@ -9,16 +9,33 @@ export const metadata: Metadata = {
   description:
     "Contact Breezyair to book same-day AC repair, maintenance or installation in Bengaluru. Call +91 8660174569 or fill the form — Asad replies within 30 minutes.",
   alternates: { canonical: "https://breezyair.co/contact" },
+  keywords: ["Contact Breezyair", "Book AC service Bengaluru", "AC repair booking", "Bengaluru HVAC consultant", "HVAC contractor"],
   openGraph: {
     title: "Contact Breezyair | Book AC Service in Bengaluru",
     description: "Book same-day AC service in Bengaluru. Call, email or fill the form — Asad Khan replies within 30 minutes.",
     url: "https://breezyair.co/contact",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };
 
 export default function Contact() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact Breezyair",
+    description: "Contact Breezyair to book same-day AC repair, maintenance or installation in Bengaluru.",
+    url: "https://breezyair.co/contact",
+    mainEntity: {
+      "@type": "LocalBusiness",
+      name: "Breezyair",
+      telephone: "+918660174569",
+      email: "hellobreezyair@gmail.com"
+    }
+  };
+
   return (
     <div className="flex flex-col w-full">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ── MAIN CONTACT SECTION ───────────────────────────── */}
       <section aria-label="Contact information and booking form" className="max-w-7xl mx-auto px-4 md:px-8 w-full py-10 md:py-16">

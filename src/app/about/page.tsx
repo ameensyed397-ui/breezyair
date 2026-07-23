@@ -9,10 +9,12 @@ export const metadata: Metadata = {
   description:
     "Meet Asad Khan — 15+ years of HVAC experience and Bengaluru's most trusted neighbourhood AC technician. The story behind Breezyair and how we work.",
   alternates: { canonical: "https://breezyair.co/about" },
+  keywords: ["Asad Khan Breezyair", "Bengaluru HVAC consultant", "HVAC contractor", "AC technician Bengaluru", "About Breezyair"],
   openGraph: {
     title: "About Asad Khan | Breezyair",
     description: "15+ years fixing ACs across Bengaluru. Honest pricing, respected homes, and work you can trust. This is the Breezyair story.",
     url: "https://breezyair.co/about",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };
 
@@ -33,8 +35,24 @@ const certifications = [
 const areas = ["Koramangala", "HSR Layout", "Indiranagar", "Whitefield", "Bellandur", "Marathahalli"];
 
 export default function About() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    mainEntity: {
+      "@type": "Person",
+      name: "Asad Khan",
+      jobTitle: "Lead HVAC Technician",
+      worksFor: {
+        "@type": "LocalBusiness",
+        name: "Breezyair"
+      },
+      description: "15+ years of HVAC experience and Bengaluru's most trusted neighbourhood AC technician."
+    }
+  };
+
   return (
     <div className="flex flex-col w-full">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ── HERO ──────────────────────────────────────────── */}
       <section aria-label="Our story" className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-10 md:pt-16 pb-14">

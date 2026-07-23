@@ -8,11 +8,13 @@ export const metadata: Metadata = {
   description:
     "Transparent AC service pricing in Bengaluru. Basic service ₹499, full service ₹699, wet deep clean ₹899. AMC plans from ₹1,499/year. No hidden charges — you approve before we start.",
   alternates: { canonical: "https://breezyair.co/pricing" },
+  keywords: ["AC service pricing Bengaluru", "AC repair cost Bengaluru", "AC maintenance plans", "Bengaluru HVAC consultant", "HVAC contractor"],
   openGraph: {
     title: "AC Service Pricing in Bengaluru | Breezyair",
     description:
       "Published prices, no surprises. AC repair from ₹499, deep cleaning ₹899, AMC plans from ₹1,499/year across Bengaluru.",
     url: "https://breezyair.co/pricing",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };
 
@@ -85,8 +87,23 @@ const amcPlans = [
 ];
 
 export default function Pricing() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    name: "AC Services Pricing",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Basic Service" }, price: "499", priceCurrency: "INR" },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Full Service" }, price: "699", priceCurrency: "INR" },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Wet Deep Clean" }, price: "899", priceCurrency: "INR" },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Repair (Diagnostics)" }, price: "499", priceCurrency: "INR" },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Installation" }, price: "1499", priceCurrency: "INR" },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Uninstallation" }, price: "699", priceCurrency: "INR" }
+    ]
+  };
+
   return (
     <div className="flex flex-col w-full">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ── HERO ──────────────────────────────────────────── */}
       <section aria-label="Pricing hero" className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-10 md:pt-16 pb-14 text-center">

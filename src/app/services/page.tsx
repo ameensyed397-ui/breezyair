@@ -9,10 +9,12 @@ export const metadata: Metadata = {
   description:
     "Breezyair offers expert AC repair (₹499), deep cleaning (₹899), maintenance plans & new installations across Indiranagar, Koramangala & Whitefield. Same-day certified service.",
   alternates: { canonical: "https://breezyair.co/services" },
+  keywords: ["AC repair Bengaluru", "AC deep cleaning", "AC installation", "Bengaluru HVAC consultant", "HVAC contractor"],
   openGraph: {
     title: "AC Repair, Cleaning & Installation Services | Breezyair Bengaluru",
     description: "Expert AC repair from ₹499. Deep cleaning, maintenance plans & installations by certified HVAC technicians across Bengaluru.",
     url: "https://breezyair.co/services",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
 };
 
@@ -29,8 +31,33 @@ const TEAM = [
 ];
 
 export default function Services() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "HVAC Services in Bengaluru",
+    provider: {
+      "@type": "LocalBusiness",
+      name: "Breezyair",
+      url: "https://breezyair.co"
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Bengaluru"
+    },
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "AC Services",
+      itemListElement: [
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Wet Deep Clean" }, price: "899", priceCurrency: "INR" },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Repair" }, price: "499", priceCurrency: "INR" },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "AC Installation" }, price: "1499", priceCurrency: "INR" }
+      ]
+    }
+  };
+
   return (
     <div className="flex flex-col w-full">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ── HERO ──────────────────────────────────────────── */}
       <section aria-label="Services hero" className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-10 md:pt-16 pb-16">
