@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import Razorpay from "razorpay";
 
 export const runtime = "nodejs";
 
-const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID;
+const RAZORPAY_KEY_ID = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID;
 const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 
 export async function POST(req: NextRequest) {
@@ -27,40 +28,26 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { amount, currency = "INR", receipt, description } = body;
 
-    if (!amount || typeof amount !== "number" || amount <= 0) {
-      return NextResponse.json({ error: "Valid amount required (in INR)" }, { status: 400 });
-    }
-
-    if (amount < 50 || amount > 50000) {
-      return NextResponse.json({ error: "Amount must be between ₹50 and ₹50,000" }, { status: 400 });
-    }
-
     // Razorpay expects amount in paise
     const amountPaise = Math.round(amount * 100);
 
-    const auth = Buffer.from(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`).toString("base64");
-
-    const res = await fetch("https://api.razorpay.com/v1/orders", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Basic ${auth}`,
-      },
-      body: JSON.stringify({
-        amount: amountPaise,
-        currency,
-        receipt: receipt || `breezy_${Date.now()}`,
-        notes: { description: description || "Breezyair AC Service" },
-      }),
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      console.error("[payment] Razorpay order creation failed:", err);
-      return NextResponse.json({ error: err.error?.description || "Failed to create order" }, { status: 500 });
+    if (!amount || typeof amount !== "number" || amountPaise < 100) {
+      return NextResponse.json({ error: "Valid amount required (minimum 100 paise)" }, { status: 400 });
     }
 
-    const order = await res.json();
+    const razorpay = new Razorpay({
+      key_id: RAZORPAY_KEY_ID,
+      key_secret: RAZORPAY_KEY_SECRET,
+    });
+
+    const options = {
+      amount: amountPaise,
+      currency,
+      receipt: receipt || `breezy_${Date.now()}`,
+      notes: { description: description || "Breezyair AC Service" },
+    };
+
+    const order = await razorpay.orders.create(options);
 
     return NextResponse.json({
       orderId: order.id,
@@ -68,8 +55,11 @@ export async function POST(req: NextRequest) {
       currency: order.currency,
       keyId: RAZORPAY_KEY_ID,
     });
-  } catch (err) {
+  } catch (err: any) {
     console.error("[payment] create-order error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    if (err.statusCode === 401) {
+      return NextResponse.json({ error: "Unauthorized payment gateway access" }, { status: 401 });
+    }
+    return NextResponse.json({ error: err.error?.description || "Failed to create order" }, { status: 500 });
   }
 }

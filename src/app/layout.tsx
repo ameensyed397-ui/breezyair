@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: "%s | Breezyair — Bengaluru's Trusted HVAC Experts",
   },
   description:
-    "Breezyair offers expert AC repair, deep cleaning, maintenance plans & new installations across Indiranagar, Koramangala, Whitefield & Bengaluru. Same-day service. Certified technicians. No hidden costs.",
+    "Bengaluru's trusted HVAC experts. We provide top-tier AC repair, deep cleaning, and installations with zero hidden costs. Schedule your visit today.",
   keywords: [
     "AC repair Bengaluru",
     "AC maintenance Bengaluru",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     siteName: "Breezyair",
     title: "Breezyair | #1 AC Repair & Maintenance in Bengaluru",
     description:
-      "Expert HVAC services across Bengaluru — same-day repairs, deep cleaning, annual maintenance plans & new installations by certified technicians.",
+      "Bengaluru's trusted HVAC experts. We provide top-tier AC repair, deep cleaning, and installations with zero hidden costs. Schedule your visit today.",
     images: [
       {
         url: "/og-image.png",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Breezyair | AC Repair & Maintenance, Bengaluru",
     description:
-      "Expert HVAC services — same-day repairs, deep cleaning, maintenance plans & installations across Bengaluru.",
+      "Bengaluru's trusted HVAC experts. We provide top-tier AC repair, deep cleaning, and installations with zero hidden costs. Schedule your visit today.",
     images: ["/og-image.png"],
   },
 
@@ -110,11 +110,11 @@ export const metadata: Metadata = {
     ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
     : {}),
 
-  /* ── Icons — doodle mascot favicon ──────────────────── */
+  /* ── Icons — professional avatar favicon ──────────────────── */
   icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
+    icon: "/breezy-avatar.png",
+    shortcut: "/breezy-avatar.png",
+    apple: "/breezy-avatar.png",
   },
 };
 
@@ -127,7 +127,7 @@ const jsonLd = {
       "@id": "https://breezyair.co/#business",
       name: "Breezyair",
       description:
-        "Expert AC repair, deep cleaning, maintenance and installation services in Bengaluru by certified HVAC technicians. Same-day service. Transparent pricing. No hidden costs.",
+        "Bengaluru's trusted HVAC experts. We provide top-tier AC repair, deep cleaning, and installations with zero hidden costs. Schedule your visit today.",
       url: "https://breezyair.co",
       telephone: "+918660174569",
       email: "hellobreezyair@gmail.com",
@@ -200,7 +200,7 @@ const jsonLd = {
       "@id": "https://breezyair.co/#website",
       url: "https://breezyair.co",
       name: "Breezyair",
-      description: "Bengaluru's trusted HVAC service provider — same-day AC repair, deep cleaning, maintenance & installation",
+      description: "Bengaluru's trusted HVAC experts. We provide top-tier AC repair, deep cleaning, and installations with zero hidden costs. Schedule your visit today.",
       publisher: { "@id": "https://breezyair.co/#business" },
       potentialAction: {
         "@type": "SearchAction",
