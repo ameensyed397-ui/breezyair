@@ -25,6 +25,13 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  async redirects() {
+    return [
+      // Legacy static-site URLs indexed by Google before this became a Next.js app.
+      { source: "/index.html", destination: "/", permanent: true },
+      { source: "/Home", destination: "/", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;
